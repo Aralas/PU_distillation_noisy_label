@@ -1,0 +1,45 @@
+iteraion 0, precision of additional data for each class
+[0.1111111111111111, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+iteraion 0, number of additional data for each class
+[9, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+iteraion 1, precision of additional data for each class
+[0.2777777777777778, 0.38461538461538464, 0, 0, 0, 0.0, 0, 0.25, 1.0, 0]
+iteraion 1, number of additional data for each class
+[72, 26, 0, 0, 0, 4, 0, 4, 5, 0]
+iteraion 2, precision of additional data for each class
+[0.25752508361204013, 0.32019704433497537, 0.5454545454545454, 0, 0, 0.2564102564102564, 0.5112359550561798, 0.21621621621621623, 0.5, 0.6025641025641025]
+iteraion 2, number of additional data for each class
+[299, 203, 22, 0, 0, 78, 178, 74, 16, 156]
+iteraion 3, precision of additional data for each class
+[0.2833562585969739, 0.30402384500745155, 0.5973154362416108, 0.2727272727272727, 0.5961538461538461, 0.29914529914529914, 0.3490566037735849, 0.22409638554216868, 0.5517241379310345, 0.5256124721603563]
+iteraion 3, number of additional data for each class
+[727, 671, 149, 11, 52, 351, 106, 415, 58, 449]
+iteraion 4, precision of additional data for each class
+[0.302, 0.31398104265402843, 0.5903083700440529, 0.6810344827586207, 0.6646706586826348, 0.32119914346895073, 0.4148397976391231, 0.21180555555555555, 0.32217573221757323, 0.472]
+iteraion 4, number of additional data for each class
+[1000, 844, 227, 116, 167, 467, 593, 576, 239, 1000]
+iteraion 5, precision of additional data for each class
+[0.302, 0.329, 0.6070038910505836, 0.7067039106145251, 0.6497326203208557, 0.431, 0.424, 0.235, 0.3459715639810427, 0.459]
+iteraion 5, number of additional data for each class
+[1000, 1000, 514, 358, 374, 1000, 1000, 1000, 633, 1000]
+iteraion 6, precision of additional data for each class
+[0.303, 0.325, 0.639, 0.7057793345008757, 0.6003062787136294, 0.435, 0.442, 0.209, 0.384, 0.455]
+iteraion 6, number of additional data for each class
+[1000, 1000, 1000, 571, 653, 1000, 1000, 1000, 1000, 1000]
+iteraion 7, precision of additional data for each class
+[0.304, 0.322, 0.646, 0.699, 0.643, 0.444, 0.455, 0.232, 0.379, 0.462]
+iteraion 7, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteraion 8, precision of additional data for each class
+[0.303, 0.33, 0.659, 0.709, 0.615, 0.436, 0.469, 0.226, 0.449, 0.523]
+iteraion 8, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteraion 9, precision of additional data for each class
+[0.297, 0.318, 0.657, 0.726, 0.671, 0.437, 0.472, 0.222, 0.444, 0.502]
+iteraion 9, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+precision of teacher model on whole training dataset
+[0.159881812212738, 0.13506554307116106, 0.11723737666860128, 0.10523174855778794, 0.1248791492104415, 0.12580823942360983, 0.12848729076255425, 0.144524236983842, 0.14050267820354348, 0.14223669923995658]
+precision of teacher model on clean dataset
+[1.0, 1.0, 0.98, 0.9615384615384616, 0.98, 1.0, 1.0, 1.0, 0.9803921568627451, 1.0]
+lambda: 0.8820701868048408
