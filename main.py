@@ -19,9 +19,16 @@ config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 K.set_session(sess)
 
-# create record files
+file_index = 1
+noise_level = 0.5
+clean_data_size = 50
+seed = 10 * file_index
+additional_data_size = 1000
+learning_rate = 0.0003
+iteration = 20
 
-dirs = 'record/noise_0.5_iteration_10_cleansize_50_add_1500_lr_0.001/test1/'
+# create record files
+dirs = 'record/noise_' + str(noise_level) + '_iteration_' + str(iteraion) + '_cleansize_' + str(clean_data_size) + '_add_' + str(additional_data_size) + '_lr_' + str(learning_rate) + '/test' + str(file_index) + '/'
 if not os.path.exists(dirs):
     os.makedirs(dirs)
 
@@ -69,9 +76,7 @@ def generate_noise_labels(y_train, noise_level):
     return y_train
 
 
-noise_level = 0.5
-clean_data_size = 50
-seed = 10
+
 
 np.random.seed(seed)
 tf.set_random_seed(seed)
@@ -85,7 +90,7 @@ file_setting.write('clean data size for each class: ' + str(clean_data_size) + '
 file_setting.close()
 
 
-def create_model(architecture, num_classes, learning_rate=0.001, dropout=0.5):
+def create_model(architecture, num_classes, learning_rate=learning_rate, dropout=0.5):
     model = Sequential()
     for layer_index in range(len(architecture)):
         layer = architecture[layer_index]
@@ -152,17 +157,17 @@ for epoch in range(epochs):
         classifier.fit(x, y, batch_size=32, epochs=20, shuffle=True)
         pred_train = classifier.predict(x_train)
         candidate_index = np.where(pred_train > 0.98)[0]
-        if len(candidate_index) < 1500:
+        if len(candidate_index) < additional_data_size:
             additional_data_index[label] = list(candidate_index)
         else:
-            additional_data_index[label] = np.argsort(-pred_train, axis=0)[0:1500].reshape(-1)
+            additional_data_index[label] = np.argsort(-pred_train, axis=0)[0:additional_data_size].reshape(-1)
 
     # estimate additional clean data
     precision_additional_data = []
     number_additional_data = []
     for label in range(10):
         index = additional_data_index[label]
-        true_positive_index = list(np.where(y_train_orig[:, label] != 1)[0])
+        true_positive_index = list(np.where(y_train_orig[:, label] == 1)[0])
         TP = len(list(set(index) & set(true_positive_index)))
         if len(index) == 0:
             precision_additional_data.append(0)

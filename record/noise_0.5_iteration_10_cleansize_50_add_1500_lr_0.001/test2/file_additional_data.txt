@@ -1,8 +1,0 @@
-iteraion 0, precision of additional data for each class
-[0.0, 0.7272727272727273, 0, 0.9230769230769231, 0, 0, 0, 0, 0.16666666666666666, 0]
-iteraion 0, number of additional data for each class
-[5, 143, 0, 13, 0, 0, 0, 0, 6, 0]
-iteraion 1, precision of additional data for each class
-[0.436, 0.5253333333333333, 0.8554216867469879, 0.7526666666666667, 0.8989169675090253, 0.5453333333333333, 0.5625, 0.40308747855917665, 0.47933333333333333, 0.5373333333333333]
-iteraion 1, number of additional data for each class
-[1500, 1500, 415, 1500, 277, 1500, 16, 583, 1500, 1500]

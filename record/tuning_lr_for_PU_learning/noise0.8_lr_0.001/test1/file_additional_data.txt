@@ -1,0 +1,240 @@
+iteration 20, precision of additional data for each class
+[0, 0, 0, 0.25, 0, 0, 0, 0.6785714285714286, 0, 0.4098939929328622]
+iteration 20, number of additional data for each class
+[0, 0, 0, 4, 0, 0, 0, 28, 0, 283]
+iteration 20, precision of additional data for each class
+[1.0, 0.54, 0.25609756097560976, 0.32229580573951433, 0.12182203389830508, 0.368, 0.33396584440227706, 0.637, 0.6367521367521367, 0.524]
+iteration 20, number of additional data for each class
+[1, 1000, 574, 906, 944, 1000, 527, 1000, 468, 1000]
+iteration 20, precision of additional data for each class
+[0.636, 0.62, 0.239, 0.308, 0.166, 0.368, 0.417, 0.619, 0.663, 0.518]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.529, 0.662, 0.216, 0.268, 0.149, 0.391, 0.348, 0.664, 0.636, 0.501]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.52, 0.668, 0.204, 0.236, 0.133, 0.331, 0.32, 0.511, 0.628, 0.443]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.463, 0.676, 0.176, 0.192, 0.13, 0.299, 0.285, 0.386, 0.434, 0.367]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.396, 0.555, 0.182, 0.175, 0.119, 0.26, 0.256, 0.396, 0.437, 0.377]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.357, 0.455, 0.187, 0.175, 0.129, 0.276, 0.261, 0.401, 0.404, 0.319]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.285, 0.422, 0.18, 0.171, 0.118, 0.238, 0.205, 0.361, 0.335, 0.311]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.231, 0.444, 0.18, 0.192, 0.127, 0.232, 0.174, 0.286, 0.318, 0.311]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.241, 0.421, 0.184, 0.165, 0.149, 0.21, 0.173, 0.287, 0.26, 0.266]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.213, 0.431, 0.187, 0.145, 0.129, 0.219, 0.172, 0.239, 0.243, 0.279]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.216, 0.405, 0.181, 0.181, 0.124, 0.195, 0.176, 0.237, 0.203, 0.249]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.174, 0.361, 0.192, 0.145, 0.126, 0.18, 0.148, 0.229, 0.175, 0.24]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.199, 0.296, 0.191, 0.141, 0.117, 0.178, 0.154, 0.235, 0.182, 0.264]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.19, 0.288, 0.192, 0.153, 0.118, 0.158, 0.176, 0.222, 0.192, 0.223]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.18, 0.23, 0.167, 0.134, 0.111, 0.174, 0.14, 0.184, 0.146, 0.219]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.179, 0.237, 0.161, 0.144, 0.092, 0.166, 0.146, 0.199, 0.187, 0.218]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.182, 0.212, 0.146, 0.136, 0.102, 0.154, 0.144, 0.199, 0.2, 0.211]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0.141, 0.239, 0.152, 0.13, 0.099, 0.172, 0.119, 0.188, 0.166, 0.201]
+iteration 20, number of additional data for each class
+[1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+iteration 20, precision of additional data for each class
+[0, 0, 0, 0, 0, 0.7272727272727273, 0, 0.75, 0, 0.3867924528301887]
+iteration 20, number of additional data for each class
+[0, 0, 0, 0, 0, 11, 0, 4, 0, 106]
+iteration 20, precision of additional data for each class
+[1.0, 0.5766666666666667, 0.21933333333333332, 0.255609756097561, 0.20815986677768525, 0.43866666666666665, 0.46153846153846156, 0.504, 0.544, 0.542]
+iteration 20, number of additional data for each class
+[2, 1500, 1500, 1025, 1201, 1500, 65, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.4826666666666667, 0.6693333333333333, 0.19533333333333333, 0.25266666666666665, 0.20133333333333334, 0.4053333333333333, 0.44, 0.5686666666666667, 0.5753333333333334, 0.49733333333333335]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.464, 0.7, 0.17066666666666666, 0.21533333333333332, 0.14333333333333334, 0.376, 0.4, 0.5273333333333333, 0.4066666666666667, 0.5213333333333333]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.3406666666666667, 0.642, 0.176, 0.21333333333333335, 0.13733333333333334, 0.32666666666666666, 0.304, 0.4786666666666667, 0.37733333333333335, 0.44066666666666665]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.23933333333333334, 0.586, 0.15866666666666668, 0.214, 0.12666666666666668, 0.25866666666666666, 0.27066666666666667, 0.38466666666666666, 0.3486666666666667, 0.352]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.24933333333333332, 0.5193333333333333, 0.152, 0.17466666666666666, 0.13, 0.20933333333333334, 0.19, 0.354, 0.296, 0.3546666666666667]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.21866666666666668, 0.456, 0.158, 0.17733333333333334, 0.13266666666666665, 0.176, 0.21, 0.3473333333333333, 0.274, 0.24466666666666667]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.182, 0.31866666666666665, 0.144, 0.174, 0.136, 0.17133333333333334, 0.19333333333333333, 0.228, 0.21933333333333332, 0.25066666666666665]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.208, 0.21266666666666667, 0.12933333333333333, 0.16266666666666665, 0.11666666666666667, 0.16666666666666666, 0.182, 0.19866666666666666, 0.17733333333333334, 0.23266666666666666]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.19, 0.204, 0.128, 0.16, 0.12266666666666666, 0.174, 0.174, 0.136, 0.144, 0.232]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.16133333333333333, 0.18, 0.13266666666666665, 0.13866666666666666, 0.11333333333333333, 0.17733333333333334, 0.15866666666666668, 0.09333333333333334, 0.142, 0.206]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.14866666666666667, 0.178, 0.12133333333333333, 0.13466666666666666, 0.11333333333333333, 0.16133333333333333, 0.144, 0.09333333333333334, 0.14133333333333334, 0.18933333333333333]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.13, 0.15, 0.11933333333333333, 0.13266666666666665, 0.11266666666666666, 0.15933333333333333, 0.15666666666666668, 0.09333333333333334, 0.13533333333333333, 0.19466666666666665]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.12733333333333333, 0.12133333333333333, 0.114, 0.13, 0.11266666666666666, 0.152, 0.15333333333333332, 0.09333333333333334, 0.09133333333333334, 0.17333333333333334]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.13066666666666665, 0.09733333333333333, 0.10866666666666666, 0.142, 0.11266666666666666, 0.16133333333333333, 0.14333333333333334, 0.09333333333333334, 0.09, 0.16666666666666666]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.12, 0.09733333333333333, 0.106, 0.118, 0.11266666666666666, 0.14266666666666666, 0.14266666666666666, 0.09333333333333334, 0.09, 0.174]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.13266666666666665, 0.098, 0.11466666666666667, 0.11933333333333333, 0.11266666666666666, 0.136, 0.13733333333333334, 0.09333333333333334, 0.09, 0.148]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.12266666666666666, 0.098, 0.10866666666666666, 0.11266666666666666, 0.11266666666666666, 0.136, 0.13, 0.09333333333333334, 0.09, 0.15133333333333332]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0.11733333333333333, 0.098, 0.10933333333333334, 0.122, 0.11266666666666666, 0.13466666666666666, 0.138, 0.09333333333333334, 0.09, 0.15866666666666668]
+iteration 20, number of additional data for each class
+[1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0, 0, 0.3333333333333333, 0.0, 0, 0.4444444444444444, 0, 0.639344262295082, 0, 0.4563758389261745]
+iteration 20, number of additional data for each class
+[0, 0, 9, 3, 0, 18, 0, 61, 0, 149]
+iteration 20, precision of additional data for each class
+[0.42857142857142855, 0.5543318649045521, 0.24492468893254749, 0.31424581005586594, 0.0755813953488372, 0.401, 0.11923076923076924, 0.359375, 0.5790816326530612, 0.5175]
+iteration 20, number of additional data for each class
+[7, 1362, 1527, 716, 172, 2000, 260, 1920, 1176, 2000]
+iteration 20, precision of additional data for each class
+[0.4825, 0.5615, 0.213, 0.2965, 0.14814814814814814, 0.384, 0.271, 0.4175, 0.547, 0.5025]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 1080, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.392, 0.5205, 0.205, 0.263, 0.14, 0.3765, 0.2385, 0.3675, 0.4895, 0.4415]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.346, 0.415, 0.193, 0.2215, 0.1035, 0.3445, 0.217, 0.4045, 0.4075, 0.303]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.2875, 0.3055, 0.17, 0.2115, 0.108, 0.296, 0.211, 0.3075, 0.316, 0.242]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.255, 0.156, 0.1505, 0.1915, 0.0885, 0.2585, 0.1855, 0.269, 0.169, 0.2195]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.2185, 0.119, 0.148, 0.172, 0.0985, 0.225, 0.176, 0.2305, 0.141, 0.1705]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.198, 0.094, 0.1145, 0.145, 0.113, 0.2135, 0.1625, 0.192, 0.13, 0.1295]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.167, 0.094, 0.1165, 0.1495, 0.12, 0.182, 0.1425, 0.15, 0.126, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.1605, 0.0935, 0.1255, 0.1395, 0.1075, 0.174, 0.1185, 0.1555, 0.137, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.1565, 0.0935, 0.1005, 0.1375, 0.1165, 0.172, 0.101, 0.134, 0.1275, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.133, 0.0935, 0.1, 0.121, 0.1125, 0.1645, 0.1065, 0.1505, 0.13, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.143, 0.094, 0.1005, 0.1325, 0.1105, 0.159, 0.1065, 0.147, 0.1235, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.153, 0.094, 0.1005, 0.1425, 0.1115, 0.15, 0.1065, 0.1345, 0.131, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.1195, 0.094, 0.1005, 0.134, 0.0995, 0.1505, 0.1065, 0.1325, 0.119, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.1205, 0.094, 0.1005, 0.1395, 0.098, 0.1535, 0.1065, 0.132, 0.1, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.1075, 0.094, 0.1005, 0.128, 0.108, 0.1485, 0.1065, 0.1255, 0.0995, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.11, 0.094, 0.1005, 0.1185, 0.098, 0.142, 0.1065, 0.119, 0.0995, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.1055, 0.094, 0.1005, 0.1215, 0.0975, 0.1285, 0.1065, 0.118, 0.0995, 0.0955]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
