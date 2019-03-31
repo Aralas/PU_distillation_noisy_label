@@ -234,3 +234,7 @@ iteration 20, precision of additional data for each class
 [0.549, 0.094, 0.2655, 0.2235, 0.1215, 0.476, 0.472, 0.6035, 0.449, 0.454]
 iteration 20, number of additional data for each class
 [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.556, 0.094, 0.25, 0.2245, 0.1205, 0.4705, 0.398, 0.607, 0.46, 0.452]
+iteration 20, number of additional data for each class
+[2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000]

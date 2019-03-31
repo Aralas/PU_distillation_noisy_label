@@ -158,3 +158,83 @@ iteration 20, precision of additional data for each class
 [0.7446120689655172, 0.688, 0.33591331269349844, 0.3393333333333333, 0.5229357798165137, 0.566, 0.6186666666666667, 0.6633333333333333, 0.6673333333333333, 0.5566666666666666]
 iteration 20, number of additional data for each class
 [928, 1500, 1292, 1500, 327, 1500, 1500, 1500, 1500, 1500]
+iteration 20, precision of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+iteration 20, number of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+iteration 20, precision of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+iteration 20, number of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+iteration 20, precision of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 0.5098039215686274, 0]
+iteration 20, number of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 102, 0]
+iteration 20, precision of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 0.0, 0.23076923076923078]
+iteration 20, number of additional data for each class
+[0, 0, 0, 0, 0, 0, 0, 0, 4, 13]
+iteration 20, precision of additional data for each class
+[0, 1.0, 0, 0.5263157894736842, 0, 1.0, 0, 0, 0.4576271186440678, 0.0]
+iteration 20, number of additional data for each class
+[0, 1, 0, 19, 0, 8, 0, 0, 413, 2]
+iteration 20, precision of additional data for each class
+[0, 0.9166666666666666, 0, 0.5, 0, 0.8333333333333334, 0.4166666666666667, 0.8235294117647058, 0.5734767025089605, 0.3790322580645161]
+iteration 20, number of additional data for each class
+[0, 12, 0, 12, 0, 24, 36, 51, 279, 124]
+iteration 20, precision of additional data for each class
+[1.0, 0.7428571428571429, 0.5, 0.3269230769230769, 0.0, 0.8, 0.5, 0.8333333333333334, 0.6805970149253732, 0.20833333333333334]
+iteration 20, number of additional data for each class
+[2, 70, 4, 104, 2, 25, 4, 18, 670, 24]
+iteration 20, precision of additional data for each class
+[1.0, 0.7446808510638298, 0, 0.43243243243243246, 0.0, 0.7669902912621359, 0.4583333333333333, 0.8, 0.7292069632495164, 0.46865671641791046]
+iteration 20, number of additional data for each class
+[5, 47, 0, 37, 1, 103, 24, 15, 517, 335]
+iteration 20, precision of additional data for each class
+[0.9428571428571428, 0.7181208053691275, 0.5, 0.48333333333333334, 0, 0.7474226804123711, 0.6097560975609756, 0.8571428571428571, 0.6602836879432624, 0.41899441340782123]
+iteration 20, number of additional data for each class
+[35, 149, 4, 60, 0, 194, 41, 126, 1410, 179]
+iteration 20, precision of additional data for each class
+[0.8888888888888888, 0.7688679245283019, 0.6363636363636364, 0.4423076923076923, 0.16666666666666666, 0.7359154929577465, 0.7231638418079096, 0.8863636363636364, 0.6375, 0.44144144144144143]
+iteration 20, number of additional data for each class
+[9, 212, 11, 52, 6, 284, 177, 44, 2000, 222]
+iteration 20, precision of additional data for each class
+[0.8409090909090909, 0.86, 0.5, 0.4238095238095238, 0.2, 0.7261538461538461, 0.7639751552795031, 0.822429906542056, 0.622, 0.5404814004376368]
+iteration 20, number of additional data for each class
+[44, 100, 4, 210, 20, 325, 161, 107, 2000, 457]
+iteration 20, precision of additional data for each class
+[0.8979591836734694, 0.8232931726907631, 0.4537037037037037, 0.42379182156133827, 0.32142857142857145, 0.6989473684210527, 0.7672955974842768, 0.8193548387096774, 0.629, 0.5317324185248714]
+iteration 20, number of additional data for each class
+[98, 249, 108, 269, 28, 475, 318, 155, 2000, 583]
+iteration 20, precision of additional data for each class
+[0.905511811023622, 0.8286713286713286, 0.53125, 0.41317365269461076, 0.4413145539906103, 0.6926829268292682, 0.7625, 0.8243243243243243, 0.624, 0.5719557195571956]
+iteration 20, number of additional data for each class
+[127, 286, 32, 334, 213, 410, 480, 222, 2000, 1084]
+iteration 20, precision of additional data for each class
+[0.8833333333333333, 0.8376068376068376, 0.4358974358974359, 0.42073170731707316, 0.4444444444444444, 0.6432432432432432, 0.7535545023696683, 0.8115942028985508, 0.6285, 0.5611510791366906]
+iteration 20, number of additional data for each class
+[60, 351, 156, 328, 36, 740, 633, 276, 2000, 1529]
+iteration 20, precision of additional data for each class
+[0.90625, 0.8134991119005328, 0.4339622641509434, 0.39775280898876403, 0.4782608695652174, 0.6, 0.7199621570482497, 0.8326180257510729, 0.6335, 0.5435222672064778]
+iteration 20, number of additional data for each class
+[128, 563, 159, 445, 46, 1055, 1057, 233, 2000, 1976]
+iteration 20, precision of additional data for each class
+[0.8771929824561403, 0.8035961272475796, 0.47540983606557374, 0.38057324840764334, 0.4380165289256198, 0.5364552459988144, 0.6862745098039216, 0.8128654970760234, 0.6265, 0.5335]
+iteration 20, number of additional data for each class
+[171, 723, 61, 628, 242, 1687, 1275, 342, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.852017937219731, 0.7551594746716698, 0.41952506596306066, 0.35905349794238683, 0.4420289855072464, 0.521, 0.6517754868270332, 0.7543103448275862, 0.63, 0.5325]
+iteration 20, number of additional data for each class
+[223, 1066, 379, 972, 138, 2000, 1746, 696, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.8664122137404581, 0.7394422310756972, 0.37037037037037035, 0.3429172510518934, 0.49700598802395207, 0.525, 0.605, 0.7018992568125516, 0.6305, 0.531]
+iteration 20, number of additional data for each class
+[262, 1255, 702, 1426, 167, 2000, 2000, 1211, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.855595667870036, 0.713600958657879, 0.35969664138678226, 0.3185, 0.46733668341708545, 0.527, 0.5835, 0.642603550295858, 0.6375, 0.5305]
+iteration 20, number of additional data for each class
+[277, 1669, 923, 2000, 398, 2000, 2000, 1690, 2000, 2000]
+iteration 20, precision of additional data for each class
+[0.8202764976958525, 0.701, 0.3586459286367795, 0.308, 0.45252525252525255, 0.5255, 0.5805, 0.6105, 0.627, 0.5135]
+iteration 20, number of additional data for each class
+[434, 2000, 1093, 2000, 495, 2000, 2000, 2000, 2000, 2000]

@@ -19,6 +19,7 @@ config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 K.set_session(sess)
 
+clean_data_size = 50
 
 # load data from CIFAR10
 def load_data(clean_data_size):
@@ -105,17 +106,9 @@ def run_benchmark(file_index, noise_level, learning_rate, seed):
 
     # train benchmark
     architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [500]]
-    benchmark_model = create_model(architecture, num_classes=10, learning_rate)
+    benchmark_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
 
-    file_setting = open(dirs + 'file_setting.txt', 'a+')
-    file_setting.write('*' * 10 + 'architecture of benchmark classifier' + '*' * 10 + '\n')
-    orig_stdout = sys.stdout
-    sys.stdout = file_setting
-    print(benchmark_model.summary())
-    sys.stdout = orig_stdout
-    file_setting.close()
-
-    History_benchmark = student_model.fit(x_train, y_train, validation_data=(x_test, y_test), batch_size=64, epochs=100,
+    History_benchmark = benchmark_model.fit(x_train, y_train, validation_data=(x_test, y_test), batch_size=64, epochs=50,
                                           shuffle=True)
 
     file_benchmark = open(dirs + '/file_benchmark.txt', 'a+')

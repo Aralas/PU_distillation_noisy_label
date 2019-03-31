@@ -90,7 +90,7 @@ file_setting.write('clean data size for each class: ' + str(clean_data_size) + '
 file_setting.close()
 
 
-def create_model(architecture, num_classes, learning_rate=learning_rate, dropout=0.5):
+def create_model(architecture, num_classes, learning_rate, dropout=0.5):
     model = Sequential()
     for layer_index in range(len(architecture)):
         layer = architecture[layer_index]
@@ -275,7 +275,7 @@ print(benchmark_model.summary())
 sys.stdout = orig_stdout
 file_setting.close()
 
-History_benchmark = student_model.fit(x_train, y_train, validation_data=(x_test, y_test), batch_size=64, epochs=100,
+History_benchmark = benchmark_model.fit(x_train, y_train, validation_data=(x_test, y_test), batch_size=64, epochs=100,
                                       shuffle=True)
 
 file_benchmark.write('training accuracy' + '\n')
