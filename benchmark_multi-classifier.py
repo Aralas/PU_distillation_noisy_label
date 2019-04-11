@@ -25,7 +25,7 @@ clean_data_size = 50
 def load_data(clean_data_size):
     cifar10 = tf.keras.datasets.cifar10
     (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-    x_train, x_test = x_train / 255.0, x_test / 255.0
+    x_train, x_test = x_train / 127.5 - 1, x_test / 127.5 - 1
     x_train = x_train.reshape(x_train.shape[0], 32, 32, 3)
     x_test = x_test.reshape(x_test.shape[0], 32, 32, 3)
 
@@ -100,12 +100,12 @@ def run_benchmark(file_index, noise_level, learning_rate, seed):
     y_train = generate_noise_labels(y_train, noise_level)
 
     # create record files
-    dirs = 'record/benchmark_multi_classifier/noise_' + str(noise_level) + '_lr_' + str(learning_rate) + '/test' + str(file_index)
+    dirs = 'record_new_preprocessing/benchmark/noise_' + str(noise_level) + '_lr_' + str(learning_rate) + '/test' + str(file_index)
     if not os.path.exists(dirs):
         os.makedirs(dirs)
 
     # train benchmark
-    architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [500]]
+    architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
     benchmark_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
 
     History_benchmark = benchmark_model.fit(x_train, y_train, validation_data=(x_test, y_test), batch_size=64, epochs=50,
@@ -120,8 +120,8 @@ def run_benchmark(file_index, noise_level, learning_rate, seed):
 
 
 for file_index in range(5):
-    for noise_level in [0.5, 0.8]:
-        for learning_rate in [0.0003, 0.0001]:
+    for noise_level in [0.5]:
+        for learning_rate in [0.0003]:
             seed = 10 * file_index
             run_benchmark(file_index, noise_level, learning_rate, seed)
 
