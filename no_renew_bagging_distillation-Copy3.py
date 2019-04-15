@@ -96,7 +96,7 @@ seed = 10 * file_index
 additional_data_size = 2000
 learning_rate = 0.0003
 iteration_num = 10
-bagging_threshold = 0.8
+bagging_threshold = 0.85
 add_criterion = 90
 minimum_addtional_size = 50
 
@@ -220,7 +220,7 @@ for k in range(5):
 
     y_pred = teacher_model.predict(x_train)
     # generate a multi-classifier
-    for lambda_teacher in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]:
+    for lambda_teacher in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]:
         architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
         student_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
         
