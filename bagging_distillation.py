@@ -89,14 +89,14 @@ config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 K.set_session(sess)
 
-file_index = 1
+file_index = 3
 noise_level = 0.5
 clean_data_size = 50
 seed = 10 * file_index
 additional_data_size = 2000
 learning_rate = 0.0003
 iteration_num = 10
-bagging_threshold = 0.95
+bagging_threshold = 0.9
 add_criterion = 75
 minimum_addtional_size = 50
 
@@ -133,21 +133,21 @@ for label in range(10):
                 add_positive_index = additional_data_index[label]
             else:
                 add_positive_index = np.random.choice(additional_data_index[label], 150, replace=False)
-            x = np.concatenate((x, x_train[add_positive_index]), axis=0)
+            x1 = np.concatenate((x, x_train[add_positive_index]), axis=0)
                     
-            n_p = len(x)
+            n_p = len(x1)
             n_n_clean = min(450, n_p//2)
             n_n_noisy = n_p - n_n_clean
             negative_index_clean = list(np.where(y_clean[:, label] != 1)[0])
             negative_index_clean = np.random.choice(negative_index_clean, n_n_clean, replace=False)
-            x = np.concatenate((x, x_clean[negative_index_clean]), axis=0)
+            x2 = np.concatenate((x1, x_clean[negative_index_clean]), axis=0)
             negative_index_noisy = set(np.arange(len(x_train))) - set(additional_data_index[label])
             negative_index_noisy = np.random.choice(list(negative_index_noisy), n_n_noisy, replace=False)
-            x = np.concatenate((x, x_train[negative_index_noisy]), axis=0)
+            x3 = np.concatenate((x2, x_train[negative_index_noisy]), axis=0)
             
             y = [1] * n_p + [0] * n_p
             early_stopping = EarlyStopping(monitor='loss', patience=10)
-            model.fit(x, y, batch_size=32, epochs=50, shuffle=True, callbacks=[early_stopping])
+            model.fit(x3, y, batch_size=32, epochs=50, shuffle=True, callbacks=[early_stopping])
             binary_classifier_list.append(model)         
            
             y_pred[:, index] = model.predict(x_train).reshape(-1,)     
