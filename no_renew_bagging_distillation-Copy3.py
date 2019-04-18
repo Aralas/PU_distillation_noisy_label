@@ -90,7 +90,7 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 file_index = 1
-noise_level = 0.5
+noise_level = 0.8
 clean_data_size = 50
 seed = 10 * file_index
 additional_data_size = 2000
