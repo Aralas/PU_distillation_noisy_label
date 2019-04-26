@@ -96,7 +96,7 @@ seed = 10 * file_index
 additional_data_size = 2000
 learning_rate = 0.0003
 iteration_num = 10
-bagging_threshold = 0.95
+bagging_threshold = 0.9
 add_criterion = 75
 minimum_addtional_size = 50
 
@@ -112,9 +112,9 @@ if not os.path.exists(dirs):
     os.makedirs(dirs)
 
 
-architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [256]]
+architecture = [[64, 5, 5], [64, 5, 5], [32, 5, 5], [32, 5, 5], [16, 5, 5], [256]]
 
-final_additional_data = [[] for i in range(10)]
+# final_additional_data = [[] for i in range(10)]
 
 for label in range(10):
     additional_data_index = [[] for i in range(iteration_num)]    
@@ -191,50 +191,50 @@ for label in range(10):
     precision_file.write(str(number_additional_data) + '\n') 
     precision_file.close()
     
-    final_additional_data[label] = additional_data_index[-1]
+#     final_additional_data[label] = additional_data_index[-1]
 
     
-# get additional data and train teacher model
-x_add = deepcopy(x_clean)
-y_add = deepcopy(y_clean)
-for label in range(10):
-    index = final_additional_data[label]
-    x_add = np.concatenate((x_add, x_train[index]), axis=0)
-    y_add = np.concatenate((y_add, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
+# # get additional data and train teacher model
+# x_add = deepcopy(x_clean)
+# y_add = deepcopy(y_clean)
+# for label in range(10):
+#     index = final_additional_data[label]
+#     x_add = np.concatenate((x_add, x_train[index]), axis=0)
+#     y_add = np.concatenate((y_add, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
 
-for k in range(5):
-    architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
-    teacher_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
-    early_stopping = EarlyStopping(monitor='loss', patience=5)
-    History_teacher = teacher_model.fit(x_add, y_add, validation_data=(x_test, y_test), batch_size=64, epochs=50,
-                                        shuffle=True, callbacks=[early_stopping])
+# for k in range(5):
+#     architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
+#     teacher_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
+#     early_stopping = EarlyStopping(monitor='loss', patience=5)
+#     History_teacher = teacher_model.fit(x_add, y_add, validation_data=(x_test, y_test), batch_size=64, epochs=50,
+#                                         shuffle=True, callbacks=[early_stopping])
 
-    file_teacher  = open(dirs + 'file_teacher_' + str(k) + '.txt', 'a+')
-    file_teacher.write('training accuracy' + '\n')
-    file_teacher.write(str(History_teacher.history['acc']) + '\n')
-    file_teacher.write('test accuracy' + '\n')
-    file_teacher.write(str(History_teacher.history['val_acc']) + '\n')
-    file_teacher.close()
+#     file_teacher  = open(dirs + 'file_teacher_' + str(k) + '.txt', 'a+')
+#     file_teacher.write('training accuracy' + '\n')
+#     file_teacher.write(str(History_teacher.history['acc']) + '\n')
+#     file_teacher.write('test accuracy' + '\n')
+#     file_teacher.write(str(History_teacher.history['val_acc']) + '\n')
+#     file_teacher.close()
 
-    teacher_model.save_weights(dirs + 'teacher_model_weights_' + str(k) + '.h5')
+#     teacher_model.save_weights(dirs + 'teacher_model_weights_' + str(k) + '.h5')
 
-    y_pred = teacher_model.predict(x_train)
-    # generate a multi-classifier
-    for lambda_teacher in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]:
-        architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
-        student_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
+#     y_pred = teacher_model.predict(x_train)
+#     # generate a multi-classifier
+#     for lambda_teacher in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]:
+#         architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
+#         student_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
         
-        y_pseudo = lambda_teacher * y_train + (1 - lambda_teacher) * y_pred
-        early_stopping = EarlyStopping(monitor='loss', patience=5)
-        History_student = student_model.fit(x_train, y_pseudo, validation_data=(x_test, y_test), batch_size=64, epochs=50,
-                                            shuffle=True, callbacks=[early_stopping])
+#         y_pseudo = lambda_teacher * y_train + (1 - lambda_teacher) * y_pred
+#         early_stopping = EarlyStopping(monitor='loss', patience=5)
+#         History_student = student_model.fit(x_train, y_pseudo, validation_data=(x_test, y_test), batch_size=64, epochs=50,
+#                                             shuffle=True, callbacks=[early_stopping])
 
-        file_student  = open(dirs + 'file_student_' + str(k) + '.txt', 'a+')
-        file_student.write('training accuracy when lambda=' + str(lambda_teacher) + '\n')
-        file_student.write(str(History_student.history['acc']) + '\n')
-        file_student.write('test accuracy when lambda=' + str(lambda_teacher) + '\n')
-        file_student.write(str(History_student.history['val_acc']) + '\n')
-        file_student.close()
+#         file_student  = open(dirs + 'file_student_' + str(k) + '.txt', 'a+')
+#         file_student.write('training accuracy when lambda=' + str(lambda_teacher) + '\n')
+#         file_student.write(str(History_student.history['acc']) + '\n')
+#         file_student.write('test accuracy when lambda=' + str(lambda_teacher) + '\n')
+#         file_student.write(str(History_student.history['val_acc']) + '\n')
+#         file_student.close()
 
     
        
