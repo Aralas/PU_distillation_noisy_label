@@ -97,7 +97,7 @@ additional_data_size = 2000
 learning_rate = 0.0003
 iteration_num = 10
 bagging_threshold = 0.9
-add_criterion = 75
+add_criterion = 90
 minimum_addtional_size = 50
 
 np.random.seed(seed)

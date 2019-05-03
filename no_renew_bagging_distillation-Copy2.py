@@ -96,7 +96,7 @@ seed = 10 * file_index
 additional_data_size = 2000
 learning_rate = 0.0003
 iteration_num = 10
-bagging_threshold = 0.85
+bagging_threshold = 0.95
 add_criterion = 85
 minimum_addtional_size = 50
 
