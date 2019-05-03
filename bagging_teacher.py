@@ -15,11 +15,19 @@ np.set_printoptions(threshold=np.inf)
 
 # load data from CIFAR10
 def load_data(clean_data_size):
-    cifar10 = tf.keras.datasets.cifar10
     (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-    x_train, x_test = x_train / 127.5 - 1, x_test / 127.5 - 1
-    x_train = x_train.reshape(x_train.shape[0], 32, 32, 3)
-    x_test = x_test.reshape(x_test.shape[0], 32, 32, 3)
+    
+    # Input image dimensions.
+    input_shape = x_train.shape[1:]
+    
+    # Normalize data.
+    x_train = x_train.astype('float32') / 255
+    x_test = x_test.astype('float32') / 255
+
+    # Subtract pixel mean    
+    x_train_mean = np.mean(x_train, axis=0)
+    x_train -= x_train_mean
+    x_test -= x_train_mean
 
     # transform labels to one-hot vectors
     y_train = tf.contrib.keras.utils.to_categorical(y_train, 10)
@@ -35,7 +43,7 @@ def load_data(clean_data_size):
     y_clean = y_train[clean_index]
     x_train = np.delete(x_train, clean_index, axis=0)
     y_train = np.delete(y_train, clean_index, axis=0)
-    return x_train, y_train, x_test, y_test, x_clean, y_clean
+    return x_train, y_train, x_test, y_test, x_clean, y_clean, input_shape
 
 
 def generate_noise_labels(y_train, noise_level):
