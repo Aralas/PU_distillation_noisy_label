@@ -83,7 +83,7 @@ def create_model(architecture, num_classes, learning_rate, dropout=0.5):
     return model
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -96,8 +96,8 @@ seed = 10 * file_index
 additional_data_size = 2000
 learning_rate = 0.0003
 iteration_num = 10
-bagging_threshold = 0.85
-add_criterion = 85
+bagging_threshold = 0.9
+add_criterion = 75
 minimum_addtional_size = 50
 
 np.random.seed(seed)
