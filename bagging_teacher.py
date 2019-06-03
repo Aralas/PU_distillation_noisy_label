@@ -15,19 +15,11 @@ np.set_printoptions(threshold=np.inf)
 
 # load data from CIFAR10
 def load_data(clean_data_size):
+    cifar10 = tf.keras.datasets.cifar10
     (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-    
-    # Input image dimensions.
-    input_shape = x_train.shape[1:]
-    
-    # Normalize data.
-    x_train = x_train.astype('float32') / 255
-    x_test = x_test.astype('float32') / 255
-
-    # Subtract pixel mean    
-    x_train_mean = np.mean(x_train, axis=0)
-    x_train -= x_train_mean
-    x_test -= x_train_mean
+    x_train, x_test = x_train / 127.5 - 1, x_test / 127.5 - 1
+    x_train = x_train.reshape(x_train.shape[0], 32, 32, 3)
+    x_test = x_test.reshape(x_test.shape[0], 32, 32, 3)
 
     # transform labels to one-hot vectors
     y_train = tf.contrib.keras.utils.to_categorical(y_train, 10)
@@ -43,7 +35,7 @@ def load_data(clean_data_size):
     y_clean = y_train[clean_index]
     x_train = np.delete(x_train, clean_index, axis=0)
     y_train = np.delete(y_train, clean_index, axis=0)
-    return x_train, y_train, x_test, y_test, x_clean, y_clean, input_shape
+    return x_train, y_train, x_test, y_test, x_clean, y_clean
 
 
 def generate_noise_labels(y_train, noise_level):
@@ -91,85 +83,88 @@ def create_model(architecture, num_classes, learning_rate, dropout=0.5):
     return model
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 K.set_session(sess)
 
-file_index = 1
-noise_level = 0.8
-clean_data_size = 50
-seed = 10 * file_index
-additional_data_size = 2000
-learning_rate = 0.0003
-iteration_num = 10
-bagging_threshold = 0.85
-add_criterion = 85
-minimum_addtional_size = 50
-
-np.random.seed(seed)
-tf.set_random_seed(seed)
-
-x_train, y_train, x_test, y_test, x_clean, y_clean = load_data(clean_data_size)
-y_train_orig = deepcopy(y_train)
-y_train = generate_noise_labels(y_train, noise_level)
-
-dirs = 'record_new_preprocessing/bagging_without_renew_models_PU/noise_' + str(noise_level) + '_clean_data_size_' + str(clean_data_size) + '_additional_data_size_' + str(additional_data_size)  + '/bagging_threshold_' + str(bagging_threshold) + '_add_criterion_' + str(add_criterion) + '_minimum_additional_size_' + str(minimum_addtional_size) + '/seed_' + str(seed) + '/'
-if not os.path.exists(dirs):
-    os.makedirs(dirs)
-
-final_additional_data = [[] for i in range(10)]
-add_number = []
-
-# read index of additional data
-for label in range(10):
-    file = open(dirs + 'label_' + str(label) + '.txt')
-    lines = file.readlines()
-    new_line = ''
-    for line in lines:
-        new_line += line.strip('\n').replace('array','')
-    final_additional_data[label] = eval(new_line)[-1]
-    add_number.append(len(eval(new_line)[-1]))
-
+def run_test(noise_level, additional_data_size, bagging_threshold, add_criterion):
+    file_index = 1
     
-# get additional data and train teacher model
-bootstrap_size = min(add_number)
-for k in range(5): 
-    y_pred = np.zeros((20, len(x_train), 10))
-    for teacher_bagging_i in range(20):
-        x_add = deepcopy(x_clean)
-        y_add = deepcopy(y_clean)
-        for label in range(10):
-            index = final_additional_data[label]
-            index = np.random.choice(index, bootstrap_size, replace=False)
-            x_add = np.concatenate((x_add, x_train[index]), axis=0)
-            y_add = np.concatenate((y_add, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
-
-        architecture = [[64, 5, 5], [64, 5, 5], [32, 5, 5], [32, 5, 5], [16, 5, 5], [1000]]
-        teacher_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
-        early_stopping = EarlyStopping(monitor='loss', patience=3)
-        History_teacher = teacher_model.fit(x_add, y_add, validation_data=(x_test, y_test), batch_size=64, epochs=50,
-                                            shuffle=True, callbacks=[early_stopping])
-        
-        y_pred[teacher_bagging_i] = teacher_model.predict(x_train)
-    y_pred = np.mean(y_pred, axis=0)
-    # generate a multi-classifier
-    for lambda_teacher in [0.8, 0.85, 0.9, 0.95]:
-        architecture = [[64, 5, 5], [64, 5, 5], [32, 5, 5], [32, 5, 5], [16, 5, 5], [1000]]
-        student_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
-        
-        y_pseudo = lambda_teacher * y_train + (1 - lambda_teacher) * y_pred
-        early_stopping = EarlyStopping(monitor='loss', patience=3)
-        History_student = student_model.fit(x_train, y_pseudo, validation_data=(x_test, y_test), batch_size=64, epochs=50,
-                                            shuffle=True, callbacks=[early_stopping])
-
-        file_student  = open(dirs + 'bagging_teacher_file_student_' + str(k) + '.txt', 'a+')
-        file_student.write('training accuracy when lambda=' + str(lambda_teacher) + '\n')
-        file_student.write(str(History_student.history['acc']) + '\n')
-        file_student.write('test accuracy when lambda=' + str(lambda_teacher) + '\n')
-        file_student.write(str(History_student.history['val_acc']) + '\n')
-        file_student.close()
-
+    clean_data_size = 250
+    seed = 10 * file_index
     
-       
+    learning_rate = 0.0003
+    iteration_num = 10
+    
+    minimum_addtional_size = 50
+
+    np.random.seed(seed)
+    tf.set_random_seed(seed)
+
+    x_train, y_train, x_test, y_test, x_clean, y_clean = load_data(clean_data_size)
+    y_train_orig = deepcopy(y_train)
+    y_train = generate_noise_labels(y_train, noise_level)
+    architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [256]]
+
+    dirs = 'record_new_preprocessing/bagging_cold_start_positives_' + str(2*clean_data_size) + '_clean_data_size_' + str(clean_data_size) + '_additional_data_size_' + str(additional_data_size) + '/' + str(architecture) + '/bagging_threshold_' + str(bagging_threshold) + '_add_criterion_' + str(add_criterion) + '_minimum_additional_size_' + str(minimum_addtional_size) + '_lr_' + str(learning_rate) + '/seed_' + str(seed) + '/'
+
+    if not os.path.exists(dirs + 'noise_' + str(noise_level)):
+        os.makedirs(dirs + 'noise_' + str(noise_level))
+
+    final_additional_data = [[] for i in range(10)]
+    add_number = []
+
+    # read index of additional data
+    for label in range(10):
+        file = open(dirs + 'label_' + str(label) + '.txt')
+        lines = file.readlines()
+        new_line = ''
+        for line in lines:
+            new_line += line.strip('\n').replace('array','')
+        final_additional_data[label] = eval(new_line)[-1]
+        add_number.append(len(eval(new_line)[-1]))
+
+
+    # get additional data and train teacher model
+    bootstrap_size = min(add_number)
+    for k in range(5): 
+        y_pred = np.zeros((20, len(x_train), 10))
+        for teacher_bagging_i in range(20):
+            x_add = deepcopy(x_clean)
+            y_add = deepcopy(y_clean)
+            for label in range(10):
+                index = final_additional_data[label]
+                index = np.random.choice(index, bootstrap_size, replace=False)
+                x_add = np.concatenate((x_add, x_train[index]), axis=0)
+                y_add = np.concatenate((y_add, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
+
+            architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
+            teacher_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)        
+            History_teacher = teacher_model.fit(x_add, y_add, validation_data=(x_test, y_test), batch_size=64, epochs=50, shuffle=True)
+
+            y_pred[teacher_bagging_i] = teacher_model.predict(x_train)
+        y_pred = np.mean(y_pred, axis=0)
+        # generate a multi-classifier
+        for lambda_teacher in [0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]:
+            architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
+            student_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
+
+            y_pseudo = lambda_teacher * y_train + (1 - lambda_teacher) * y_pred
+            x = np.concatenate((x_train, x_clean), axis=0)
+            y = np.concatenate((y_pseudo, y_clean), axis=0)
+            History_student = student_model.fit(x, y, validation_data=(x_test, y_test), batch_size=64, epochs=50, shuffle=True)
+
+            file_student  = open(dirs + 'noise_' + str(noise_level) + '/bagging_teacher_file_student_' + str(k) + '.txt', 'a+')
+            file_student.write('training accuracy when lambda=' + str(lambda_teacher) + '\n')
+            file_student.write(str(History_student.history['acc']) + '\n')
+            file_student.write('test accuracy when lambda=' + str(lambda_teacher) + '\n')
+            file_student.write(str(History_student.history['val_acc']) + '\n')
+            file_student.close()
+
+for noise_level in [1]:
+    for additional_data_size in [2000]:
+        for bagging_threshold in [0.9, 0.95]:
+            for add_criterion in [90, 95]:
+                run_test(noise_level, additional_data_size, bagging_threshold, add_criterion)       

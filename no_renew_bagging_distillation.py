@@ -10,9 +10,11 @@ from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten, Dropo
 from keras.optimizers import Adam
 from keras import backend as K
 from keras.callbacks import EarlyStopping
+from keras.datasets import cifar10
 
 np.set_printoptions(threshold=np.inf)
 
+# load data from CIFAR10
 # load data from CIFAR10
 def load_data(clean_data_size):
     cifar10 = tf.keras.datasets.cifar10
@@ -36,6 +38,7 @@ def load_data(clean_data_size):
     x_train = np.delete(x_train, clean_index, axis=0)
     y_train = np.delete(y_train, clean_index, axis=0)
     return x_train, y_train, x_test, y_test, x_clean, y_clean
+
 
 
 def generate_noise_labels(y_train, noise_level):
@@ -83,158 +86,112 @@ def create_model(architecture, num_classes, learning_rate, dropout=0.5):
     return model
 
 
+
+
+def run_experiment(additional_data_size, learning_rate, bagging_threshold, add_criterion, architecture):
+    file_index = 1
+    noise_level = 0.8
+    clean_data_size = 50
+    seed = 10 * file_index
+    iteration_num = 10
+    minimum_addtional_size = 50
+    np.random.seed(seed)
+    tf.set_random_seed(seed)
+
+    x_train, y_train, x_test, y_test, x_clean, y_clean = load_data(clean_data_size)
+    y_train_orig = deepcopy(y_train)
+    y_train = generate_noise_labels(y_train, noise_level)
+
+    dirs = 'record_new_preprocessing/bagging_cold_start_positives_100_clean_data_size_' + str(clean_data_size) + '_additional_data_size_' + str(additional_data_size) + '/' + str(architecture) + '/bagging_threshold_' + str(bagging_threshold) + '_add_criterion_' + str(add_criterion) + '_minimum_additional_size_' + str(minimum_addtional_size) + '_lr_' + str(learning_rate) + '/seed_' + str(seed) + '/'
+    if not os.path.exists(dirs):
+        os.makedirs(dirs)
+
+    for label in range(10):
+        additional_data_index = [[] for i in range(iteration_num)]    
+        binary_classifier_list = []
+        for index in range(100):
+            model = create_model(architecture, num_classes=2, learning_rate=learning_rate)
+            binary_classifier_list.append(model)
+        for iteration in range(iteration_num):           
+            y_pred = np.zeros((len(x_train), 100))
+            # train 100 binary classifiers for one label
+            for index in range(100):
+                print('iteration', iteration, 'label', label, 'index', index)
+                model = binary_classifier_list[index]
+
+                positive_index = list(np.where(y_clean[:, label] == 1)[0])
+                x = x_clean[positive_index]
+
+                if len(additional_data_index[label]) < 50:                
+                    add_positive_index = additional_data_index[label]
+                else:
+                    add_positive_index = np.random.choice(additional_data_index[label], 50, replace=False)
+                x = np.concatenate((x, x_train[add_positive_index]), axis=0)
+
+                n_p = len(x)
+                n_n_clean = n_p//2
+                n_n_noisy = n_p - n_n_clean
+                negative_index_clean = list(np.where(y_clean[:, label] != 1)[0])
+                negative_index_clean = np.random.choice(negative_index_clean, n_n_clean, replace=False)
+                x = np.concatenate((x, x_clean[negative_index_clean]), axis=0)
+                negative_index_noisy = set(np.arange(len(x_train))) - set(additional_data_index[label])
+                negative_index_noisy = np.random.choice(list(negative_index_noisy), n_n_noisy, replace=False)
+                x = np.concatenate((x, x_train[negative_index_noisy]), axis=0)
+
+                y = [1] * n_p + [0] * n_p
+                early_stopping = EarlyStopping(monitor='loss', patience=10)
+                model.fit(x, y, batch_size=32, epochs=50, shuffle=True, callbacks=[early_stopping])
+
+                y_pred[:, index] = model.predict(x_train).reshape(-1,)                
+
+            y_pred1 = np.sum(y_pred>bagging_threshold, axis=1)   
+            add_index = np.where(y_pred1 > add_criterion)[0]
+            if len(add_index) > additional_data_size:
+                add_index = np.argsort(-y_pred1, axis=0)[0:additional_data_size].reshape(-1)
+            elif len(add_index) < minimum_addtional_size:
+                y_pred2 = np.sum(y_pred, axis=1) 
+                add_index = np.argsort(-y_pred2, axis=0)[0:minimum_addtional_size].reshape(-1)
+            additional_data_index[iteration] = add_index
+
+        K.clear_session()   
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        sess = tf.Session(config=config)
+        K.set_session(sess)
+
+        record_file = open(dirs + 'label_' + str(label) + '.txt', 'a+')      
+        record_file.write(str(additional_data_index) + '\n')
+        record_file.close()
+
+        # estimate additional clean data  
+        precision_additional_data = []
+        number_additional_data = []              
+        true_positive_index = list(np.where(y_train_orig[:, label] == 1)[0]) 
+        for iteration in range(iteration_num):
+            index = additional_data_index[iteration]        
+            TP = len(list(set(index) & set(true_positive_index)))
+            if len(index) == 0:
+                precision_additional_data.append(0)
+            else:
+                precision_additional_data.append(TP / len(index))
+                number_additional_data.append(len(index))
+
+        precision_file = open(dirs + 'precision_file.txt', 'a+')    
+        precision_file.write(str(precision_additional_data) + '\n')
+        precision_file.write(str(number_additional_data) + '\n') 
+        precision_file.close()
+  
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
 K.set_session(sess)
 
-file_index = 1
-noise_level = 0.8
-clean_data_size = 50
-seed = 10 * file_index
 additional_data_size = 2000
-learning_rate = 0.0003
-iteration_num = 10
 bagging_threshold = 0.9
-add_criterion = 90
-minimum_addtional_size = 50
-
-np.random.seed(seed)
-tf.set_random_seed(seed)
-
-x_train, y_train, x_test, y_test, x_clean, y_clean = load_data(clean_data_size)
-y_train_orig = deepcopy(y_train)
-y_train = generate_noise_labels(y_train, noise_level)
-
-dirs = 'record_new_preprocessing/bagging_without_renew_models_PU/noise_' + str(noise_level) + '_clean_data_size_' + str(clean_data_size) + '_additional_data_size_' + str(additional_data_size)  + '/bagging_threshold_' + str(bagging_threshold) + '_add_criterion_' + str(add_criterion) + '_minimum_additional_size_' + str(minimum_addtional_size) + '/seed_' + str(seed) + '/'
-if not os.path.exists(dirs):
-    os.makedirs(dirs)
-
+add_criterion = 80
 
 architecture = [[64, 5, 5], [64, 5, 5], [32, 5, 5], [32, 5, 5], [16, 5, 5], [256]]
-
-# final_additional_data = [[] for i in range(10)]
-
-for label in range(10):
-    additional_data_index = [[] for i in range(iteration_num)]    
-    binary_classifier_list = []
-    for index in range(100):
-        model = create_model(architecture, num_classes=2, learning_rate=learning_rate)
-        binary_classifier_list.append(model)
-    for iteration in range(iteration_num):           
-        y_pred = np.zeros((len(x_train), 100))
-        # train 100 binary classifiers for one label
-        for index in range(100):
-            print('iteration', iteration, 'label', label, 'index', index)
-            model = binary_classifier_list[index]
-
-            positive_index = list(np.where(y_clean[:, label] == 1)[0])
-            x = x_clean[positive_index]
-            
-            if len(additional_data_index[label]) < 150:                
-                add_positive_index = additional_data_index[label]
-            else:
-                add_positive_index = np.random.choice(additional_data_index[label], 150, replace=False)
-            x = np.concatenate((x, x_train[add_positive_index]), axis=0)
-                    
-            n_p = len(x)
-            n_n_clean = min(450, n_p//2)
-            n_n_noisy = n_p - n_n_clean
-            negative_index_clean = list(np.where(y_clean[:, label] != 1)[0])
-            negative_index_clean = np.random.choice(negative_index_clean, n_n_clean, replace=False)
-            x = np.concatenate((x, x_clean[negative_index_clean]), axis=0)
-            negative_index_noisy = set(np.arange(len(x_train))) - set(additional_data_index[label])
-            negative_index_noisy = np.random.choice(list(negative_index_noisy), n_n_noisy, replace=False)
-            x = np.concatenate((x, x_train[negative_index_noisy]), axis=0)
-            
-            y = [1] * n_p + [0] * n_p
-            early_stopping = EarlyStopping(monitor='loss', patience=10)
-            model.fit(x, y, batch_size=32, epochs=50, shuffle=True, callbacks=[early_stopping])
-           
-            y_pred[:, index] = model.predict(x_train).reshape(-1,)                
-            
-        y_pred1 = np.sum(y_pred>bagging_threshold, axis=1)   
-        add_index = np.where(y_pred1 > add_criterion)[0]
-        if len(add_index) > additional_data_size:
-            add_index = np.argsort(-y_pred1, axis=0)[0:additional_data_size].reshape(-1)
-        elif len(add_index) < minimum_addtional_size:
-            y_pred2 = np.sum(y_pred, axis=1) 
-            add_index = np.argsort(-y_pred2, axis=0)[0:minimum_addtional_size].reshape(-1)
-        additional_data_index[iteration] = add_index
-    
-    K.clear_session()   
-    config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
-    sess = tf.Session(config=config)
-    K.set_session(sess)
-    
-    record_file = open(dirs + 'label_' + str(label) + '.txt', 'a+')      
-    record_file.write(str(additional_data_index) + '\n')
-    record_file.close()
-
-    # estimate additional clean data  
-    precision_additional_data = []
-    number_additional_data = []              
-    true_positive_index = list(np.where(y_train_orig[:, label] == 1)[0]) 
-    for iteration in range(iteration_num):
-        index = additional_data_index[iteration]        
-        TP = len(list(set(index) & set(true_positive_index)))
-        if len(index) == 0:
-            precision_additional_data.append(0)
-        else:
-            precision_additional_data.append(TP / len(index))
-            number_additional_data.append(len(index))
-    
-    precision_file = open(dirs + 'precision_file.txt', 'a+')    
-    precision_file.write(str(precision_additional_data) + '\n')
-    precision_file.write(str(number_additional_data) + '\n') 
-    precision_file.close()
-    
-#     final_additional_data[label] = additional_data_index[-1]
-
-    
-# # get additional data and train teacher model
-# x_add = deepcopy(x_clean)
-# y_add = deepcopy(y_clean)
-# for label in range(10):
-#     index = final_additional_data[label]
-#     x_add = np.concatenate((x_add, x_train[index]), axis=0)
-#     y_add = np.concatenate((y_add, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
-
-# for k in range(5):
-#     architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
-#     teacher_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
-#     early_stopping = EarlyStopping(monitor='loss', patience=5)
-#     History_teacher = teacher_model.fit(x_add, y_add, validation_data=(x_test, y_test), batch_size=64, epochs=50,
-#                                         shuffle=True, callbacks=[early_stopping])
-
-#     file_teacher  = open(dirs + 'file_teacher_' + str(k) + '.txt', 'a+')
-#     file_teacher.write('training accuracy' + '\n')
-#     file_teacher.write(str(History_teacher.history['acc']) + '\n')
-#     file_teacher.write('test accuracy' + '\n')
-#     file_teacher.write(str(History_teacher.history['val_acc']) + '\n')
-#     file_teacher.close()
-
-#     teacher_model.save_weights(dirs + 'teacher_model_weights_' + str(k) + '.h5')
-
-#     y_pred = teacher_model.predict(x_train)
-#     # generate a multi-classifier
-#     for lambda_teacher in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]:
-#         architecture = [[32, 5, 5], [32, 5, 5], [32, 5, 5], [1000]]
-#         student_model = create_model(architecture, num_classes=10, learning_rate=learning_rate)
-        
-#         y_pseudo = lambda_teacher * y_train + (1 - lambda_teacher) * y_pred
-#         early_stopping = EarlyStopping(monitor='loss', patience=5)
-#         History_student = student_model.fit(x_train, y_pseudo, validation_data=(x_test, y_test), batch_size=64, epochs=50,
-#                                             shuffle=True, callbacks=[early_stopping])
-
-#         file_student  = open(dirs + 'file_student_' + str(k) + '.txt', 'a+')
-#         file_student.write('training accuracy when lambda=' + str(lambda_teacher) + '\n')
-#         file_student.write(str(History_student.history['acc']) + '\n')
-#         file_student.write('test accuracy when lambda=' + str(lambda_teacher) + '\n')
-#         file_student.write(str(History_student.history['val_acc']) + '\n')
-#         file_student.close()
-
-    
-       
+for learning_rate in [0.0001, 0.0003, 0.001]:
+    run_experiment(additional_data_size, learning_rate, bagging_threshold, add_criterion, architecture)
