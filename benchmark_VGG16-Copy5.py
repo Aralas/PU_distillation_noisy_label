@@ -15,7 +15,7 @@ from keras.applications.vgg16 import VGG16
 from keras.applications.vgg16 import preprocess_input
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -95,9 +95,13 @@ def run_benchmark(file_index, noise_level, learning_rate, seed):
 
 
 for file_index in range(4, 5):
-    for noise_level in [0.8]:
-        for learning_rate in [0.0003, 0.0001, 0.00003]:
+    for noise_level in [0.5]:
+        for learning_rate in [0.00001]:
             seed = 10 * file_index
             run_benchmark(file_index, noise_level, learning_rate, seed)
 
-
+for file_index in range(3, 5):
+    for noise_level in [0.8, 0.9, 0.95]:
+        for learning_rate in [0.00001]:
+            seed = 10 * file_index
+            run_benchmark(file_index, noise_level, learning_rate, seed)
