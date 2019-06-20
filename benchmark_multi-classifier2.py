@@ -121,9 +121,13 @@ def run_benchmark(file_index, noise_level, learning_rate, seed):
 
 
 for file_index in range(5):
-    for noise_level in [0.9, 0.95, 1]:
-        for learning_rate in [0.00003]:
+    for noise_level in [0]:
+        for learning_rate in [0.0003, 0.00003]:
             seed = 10 * file_index
             run_benchmark(file_index, noise_level, learning_rate, seed)
 
-
+for file_index in range(5):
+    for noise_level in [0.5, 0.8]:
+        for learning_rate in [0.00003]:
+            seed = 10 * file_index
+            run_benchmark(file_index, noise_level, learning_rate, seed)

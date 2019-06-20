@@ -82,7 +82,7 @@ def lr_schedule(epoch):
     # Returns
         lr (float32): learning rate
     """
-    lr = 1e-4
+    lr = 1e-5
     if epoch > 180:
         lr *= 0.5e-3
     elif epoch > 160:
@@ -370,7 +370,7 @@ def run_benchmark(file_index, noise_level):
     print(model_type)
 
     # Prepare model model saving directory.
-    dirs = 'record_new_preprocessing/ResNet20_benchmark/noise_' + str(noise_level) + '_test' + str(file_index) + '_lr_0.0001'
+    dirs = 'record_new_preprocessing/ResNet' + str(depth) + '_benchmark/noise_' + str(noise_level) + '_test' + str(file_index) + '_lr_0.00001'
     save_dir = os.path.join(dirs, 'saved_models')
     model_name = 'cifar10_%s_model.{epoch:03d}.h5' % model_type
     if not os.path.isdir(save_dir):
@@ -469,8 +469,9 @@ def run_benchmark(file_index, noise_level):
     file_benchmark.close()
 
 
-noise_level = 0
-for file_index in range(5):
+
+file_index = 1
+for noise_level in [0, 0.5, 0.8]:
     K.clear_session()   
     sess = tf.Session(config=config)
     K.set_session(sess)
