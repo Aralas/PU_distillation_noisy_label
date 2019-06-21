@@ -82,7 +82,7 @@ def lr_schedule(epoch):
     # Returns
         lr (float32): learning rate
     """
-    lr = 1e-5
+    lr = 1e-3
     if epoch > 180:
         lr *= 0.5e-3
     elif epoch > 160:
@@ -311,7 +311,7 @@ def resnet_v2(input_shape, depth, num_classes=10):
 
 
 
-def run_benchmark(file_index, noise_level):
+def run_benchmark(file_index, noise_level, n):
     seed = 10 * file_index
     np.random.seed(seed)
     tf.set_random_seed(seed)
@@ -343,7 +343,6 @@ def run_benchmark(file_index, noise_level):
     # ResNet1001| (111)| -----     | 92.39     | -----     | 95.08+-.14| ---(---)
     # ---------------------------------------------------------------------------
 
-    n = 4
 
     # Model version
     # Orig paper: version = 1 (ResNet v1), Improved ResNet: version = 2 (ResNet v2)
@@ -370,7 +369,7 @@ def run_benchmark(file_index, noise_level):
     print(model_type)
 
     # Prepare model model saving directory.
-    dirs = 'record_new_preprocessing/ResNet' + str(depth) + '_pre-activation_benchmark/noise_' + str(noise_level) + '_test' + str(file_index) + '_lr_0.00001'
+    dirs = 'record_new_preprocessing/ResNet' + str(depth) + '_pre-activation_benchmark/noise_' + str(noise_level) + '_test' + str(file_index) + '_lr_0.001'
     save_dir = os.path.join(dirs, 'saved_models')
     model_name = 'cifar10_%s_model.{epoch:03d}.h5' % model_type
     if not os.path.isdir(save_dir):
@@ -471,12 +470,13 @@ def run_benchmark(file_index, noise_level):
 
 
 file_index = 0
-for noise_level in [0, 0.5, 0.8, 0.9]:
-    K.clear_session()   
-    sess = tf.Session(config=config)
-    K.set_session(sess)
-    run_benchmark(file_index, noise_level)
-    
+for noise_level in [0.5]:
+    for n in [3, 4, 6]:
+        K.clear_session()   
+        sess = tf.Session(config=config)
+        K.set_session(sess)
+        run_benchmark(file_index, noise_level, n)
+
 
 
             
