@@ -71,7 +71,7 @@ def lr_schedule(epoch):
     # Returns
         lr (float32): learning rate
     """
-    lr = 1e-5
+    lr = 1e-3
     if epoch > 180:
         lr *= 0.5e-3
     elif epoch > 160:
@@ -268,7 +268,7 @@ def run_test(noise_level, additional_data_size, bagging_threshold, add_criterion
 
     dirs = 'record_new_preprocessing/bagging_cold_start_positives_' + str(2*clean_data_size) + '_clean_data_size_' + str(clean_data_size) + '_additional_data_size_' + str(additional_data_size) + '/' + str(architecture) + '/bagging_threshold_' + str(bagging_threshold) + '_add_criterion_' + str(add_criterion) + '_minimum_additional_size_' + str(minimum_addtional_size) + '_lr_' + str(learning_rate) + '/seed_' + str(seed) + '/'
     
-    dirs1 = dirs + 'noise_' + str(noise_level) + '_ResNet' + str(depth) + '_pre-activation_lr_0.00001'
+    dirs1 = dirs + 'noise_' + str(noise_level) + '_ResNet' + str(depth) + '_pre-activation_lr_0.001'
     if not os.path.exists(dirs1):
         os.makedirs(dirs1)
 
@@ -300,7 +300,7 @@ def run_test(noise_level, additional_data_size, bagging_threshold, add_criterion
     input_shape = x_train.shape[1:]
     # get additional data and train teacher model
     bootstrap_size = min(add_number)
-    for k in range(5): 
+    for k in range(1): 
         y_pred = np.zeros((20, len(x_train), 10))
         for teacher_bagging_i in range(20):
             x_add = deepcopy(x_clean)
@@ -343,7 +343,7 @@ def run_test(noise_level, additional_data_size, bagging_threshold, add_criterion
             file_student.write(str(History_student.history['val_acc']) + '\n')
             file_student.close()
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "4"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
