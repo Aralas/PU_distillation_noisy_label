@@ -71,7 +71,7 @@ def lr_schedule(epoch):
     # Returns
         lr (float32): learning rate
     """
-    lr = 1e-3
+    lr = 3e-3
     if epoch > 180:
         lr *= 0.5e-3
     elif epoch > 160:
@@ -268,7 +268,7 @@ def run_test(noise_level, additional_data_size, bagging_threshold, add_criterion
 
     dirs = 'record_new_preprocessing/bagging_cold_start_positives_' + str(2*clean_data_size) + '_clean_data_size_' + str(clean_data_size) + '_additional_data_size_' + str(additional_data_size) + '/' + str(architecture) + '/bagging_threshold_' + str(bagging_threshold) + '_add_criterion_' + str(add_criterion) + '_minimum_additional_size_' + str(minimum_addtional_size) + '_lr_' + str(learning_rate) + '/seed_' + str(seed) + '/'
     
-    dirs1 = dirs + 'noise_' + str(noise_level) + '_ResNet' + str(depth) + '_pre-activation_lr_0.001'
+    dirs1 = dirs + 'noise_' + str(noise_level) + '_ResNet' + str(depth) + '_pre-activation_lr_0.003'
     if not os.path.exists(dirs1):
         os.makedirs(dirs1)
 
@@ -323,7 +323,7 @@ def run_test(noise_level, additional_data_size, bagging_threshold, add_criterion
         y_pred = np.mean(y_pred, axis=0)
         
         # generate a multi-classifier
-        for lambda_teacher in [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]:
+        for lambda_teacher in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]:
             student_model = generate_model(n, input_shape)
 
             y_pseudo = lambda_teacher * y_train + (1 - lambda_teacher) * y_pred
@@ -342,8 +342,12 @@ def run_test(noise_level, additional_data_size, bagging_threshold, add_criterion
             file_student.write('test accuracy when lambda=' + str(lambda_teacher) + '\n')
             file_student.write(str(History_student.history['val_acc']) + '\n')
             file_student.close()
+            
+            K.clear_session()   
+            sess = tf.Session(config=config)
+            K.set_session(sess)
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "4"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)

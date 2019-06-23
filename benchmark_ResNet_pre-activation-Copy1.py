@@ -82,7 +82,7 @@ def lr_schedule(epoch):
     # Returns
         lr (float32): learning rate
     """
-    lr = 1e-3  
+    lr = 3e-3  
     if epoch > 180:
         lr *= 0.5e-3
     elif epoch > 160:
@@ -370,18 +370,18 @@ def run_benchmark(file_index, noise_level, n):
     print(model_type)
 
     # Prepare model model saving directory.
-    dirs = 'record_new_preprocessing/ResNet' + str(depth) + '_pre-activation_benchmark/noise_' + str(noise_level) + '_test' + str(file_index) + '_lr_0.001'
-    save_dir = os.path.join(dirs, 'saved_models')
-    model_name = 'cifar10_%s_model.{epoch:03d}.h5' % model_type
-    if not os.path.isdir(save_dir):
-        os.makedirs(save_dir)
-    filepath = os.path.join(save_dir, model_name)
+    dirs = 'record_new_preprocessing/ResNet' + str(depth) + '_pre-activation_benchmark/noise_' + str(noise_level) + '_test' + str(file_index) + '_lr_0.003'
+#     save_dir = os.path.join(dirs, 'saved_models')
+#     model_name = 'cifar10_%s_model.{epoch:03d}.h5' % model_type
+#     if not os.path.isdir(save_dir):
+#         os.makedirs(save_dir)
+#     filepath = os.path.join(save_dir, model_name)
 
     # Prepare callbacks for model saving and for learning rate adjustment.
-    checkpoint = ModelCheckpoint(filepath=filepath,
-                                 monitor='val_acc',
-                                 verbose=1,
-                                 save_best_only=True)
+#     checkpoint = ModelCheckpoint(filepath=filepath,
+#                                  monitor='val_acc',
+#                                  verbose=1,
+#                                  save_best_only=True)
 
     lr_scheduler = LearningRateScheduler(lr_schedule)
 
@@ -389,8 +389,8 @@ def run_benchmark(file_index, noise_level, n):
                                    cooldown=0,
                                    patience=5,
                                    min_lr=0.5e-6)
-
-    callbacks = [checkpoint, lr_reducer, lr_scheduler]
+    callbacks = [lr_reducer, lr_scheduler]
+#     callbacks = [checkpoint, lr_reducer, lr_scheduler]
 
     # Run training, with or without data augmentation.
     if not data_augmentation:
