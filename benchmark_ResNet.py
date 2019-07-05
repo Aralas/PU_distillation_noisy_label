@@ -99,7 +99,7 @@ def resnet_layer(inputs,
                  num_filters=16,
                  kernel_size=3,
                  strides=1,
-                 activation='relu',
+                   activation='relu',
                  batch_normalization=True,
                  conv_first=True):
     """2D Convolution-Batch Normalization-Activation stack builder
