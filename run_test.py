@@ -32,19 +32,19 @@ seed = 99
 noise_level = 0.8
 clean_data_size = 200
 additional_data_limitation = [100, 2000]
-positive_threshold = 0.9
-add_criterion = 95
-K_iteration = 5
+positive_threshold = 0.95
+add_criterion = 90
+K_iteration = 10
 N_bagging = 100
 
 batch_size = 32
 epochs = 50
-learning_rate = 0.001
+learning_rate = 0.0003
 data_augmentation = False
-model_dir = os.path.join(os.getcwd(), 'saved_models7')
-precision_dir = os.path.join(os.getcwd(), 'saved_precision7')
+model_dir = os.path.join(os.getcwd(), 'saved_models11')
+precision_dir = os.path.join(os.getcwd(), 'saved_precision11')
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -134,14 +134,13 @@ for i in range(num_classes):
     binary_classifier_list = []
 
     # Initialize N binary classifiers
-    if not os.path.exists(os.path.join(model_dir, 'model99.h5')):        
-        for n in range(N_bagging):
-            if n % 10 == 9:
-                clear_session()
-            model = CNN(1, input_shape, learning_rate).model
-            filepath = os.path.join(model_dir, 'model%d.h5' % n)
-            model.save_weights(filepath)
+    for n in range(N_bagging):
+        if n % 10 == 9:
             clear_session()
+        model = CNN(1, input_shape, learning_rate).model
+        filepath = os.path.join(model_dir, 'model%d.h5' % n)
+        model.save_weights(filepath)
+        clear_session()
 
     for k in range(K_iteration):
         y_pred_train = np.zeros((len(x_train), N_bagging))
