@@ -33,18 +33,29 @@ noise_level = 0.8
 clean_data_size = 200
 additional_data_limitation = [100, 2000]
 positive_threshold = 0.95
-add_criterion = 90
+add_criterion = 95
 K_iteration = 10
 N_bagging = 100
+label = 1
 
 batch_size = 32
-epochs = 50
-learning_rate = 0.0003
-data_augmentation = False
-model_dir = os.path.join(os.getcwd(), 'saved_models11')
-precision_dir = os.path.join(os.getcwd(), 'saved_precision11')
+epochs = 20
+learning_rate = 0.0001
+data_augmentation = True
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+path_name = '/positive_threshold_%.2f_add_criterion_%d_learning_rate_%.4f'%(positive_threshold, add_criterion, learning_rate)
+model_dir = os.path.join(os.getcwd(), 'saved_models')
+if label == None:
+    model_dir += path_name
+else:
+    model_dir += path_name + '_label' + str(label)
+precision_dir = os.path.join(os.getcwd(), 'saved_precision')
+precision_dir += path_name
+
+print(model_dir)
+print(precision_dir)
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -54,10 +65,10 @@ np.set_printoptions(threshold=np.inf)
 
 np.random.seed(seed)
 tf.set_random_seed(seed)
-if not os.path.isdir(model_dir):
+if not os.path.exists(model_dir):
     os.makedirs(model_dir)
 
-if not os.path.isdir(precision_dir):
+if not os.path.exists(precision_dir):
     os.makedirs(precision_dir)
 
 # record parameters    
@@ -96,8 +107,8 @@ y_train = y_train_[10000:50000, ]
 
 # Generate clean dataset
 clean_index = []
-for label in range(10):
-    positive_index = list(np.where(y_train[:, label] == 1)[0])
+for i in range(10):
+    positive_index = list(np.where(y_train[:, i] == 1)[0])
     clean_index = np.append(clean_index, np.random.choice(positive_index, clean_data_size, replace=False)).astype(
         int)
 
@@ -129,7 +140,12 @@ def clear_session():
 '''
 ***** clean data augmentation *****
 '''
-for i in range(num_classes):
+if label == None:
+    label_list = np.arange(num_classes)
+else:
+    label_list = [label]
+
+for i in label_list:
     additional_data_index = []
     binary_classifier_list = []
 
