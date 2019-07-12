@@ -3,7 +3,7 @@ seed:99
  clean_data_size:200
  additional_data_limitation:100,2000
  positive_threshold:0.90
- add_criterion:95
+ add_criterion:90
  K_iteration:10
  N_bagging:100
  batch_size:32
