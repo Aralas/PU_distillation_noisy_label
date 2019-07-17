@@ -223,11 +223,8 @@ def resnet_v2(input_shape, depth, num_classes=10):
 
 
 def generate_model(n, input_shape):
-    
-   
     depth = n * 9 + 2    
     model = resnet_v2(input_shape=input_shape, depth=depth)
-  
     model.compile(loss='categorical_crossentropy',
                   optimizer=Adam(lr=lr_schedule(0)),
                   metrics=['accuracy'])
