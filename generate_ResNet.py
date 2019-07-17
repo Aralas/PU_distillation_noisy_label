@@ -16,17 +16,13 @@
 """
 
 from __future__ import print_function
+
 import keras
-from keras.layers import Dense, Conv2D, BatchNormalization, Activation
 from keras.layers import AveragePooling2D, Input, Flatten
-from keras.optimizers import Adam
-from keras.callbacks import ModelCheckpoint, LearningRateScheduler
-from keras.callbacks import ReduceLROnPlateau
-from keras.preprocessing.image import ImageDataGenerator
-from keras.regularizers import l2
+from keras.layers import Dense, Conv2D, BatchNormalization, Activation
 from keras.models import Model
-import numpy as np
-import os
+from keras.optimizers import Adam
+from keras.regularizers import l2
 
 
 class ResNet(object):
@@ -204,6 +200,3 @@ class ResNet(object):
                       optimizer=Adam(lr=self.lr_schedule(0)),
                       metrics=['accuracy'])
         return model
-
-
-
