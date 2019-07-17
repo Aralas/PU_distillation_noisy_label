@@ -33,19 +33,17 @@ noise_level = 0.8
 clean_data_size = 200
 additional_data_limitation = [100, 2000]
 positive_threshold = 0.95
-add_criterion = 90
-positive_threshold = 0.9
 add_criterion = 95
 K_iteration = 10
 N_bagging = 100
-label = 0
+label = 6
 
 batch_size = 32
 epochs = 20
-learning_rate = 0.00003
+learning_rate = 0.0001
 data_augmentation = True
 
-path_name = '/positive_threshold_%.2f_add_criterion_%d_learning_rate_%.5f'%(positive_threshold, add_criterion, learning_rate)
+path_name = '/positive_threshold_%.2f_add_criterion_%d_learning_rate_%.4f'%(positive_threshold, add_criterion, learning_rate)
 model_dir = os.path.join(os.getcwd(), 'saved_models')
 if label == None:
     model_dir += path_name
