@@ -55,7 +55,7 @@ clean_data_size = 200
 
 batch_size = 64
 epochs = 200
-learning_rate = 0.003
+learning_rate = 0.0003
 data_augmentation = True
 
 n = 2
@@ -154,14 +154,14 @@ def lr_schedule(epoch):
     # Returns
         lr (float32): learning rate
     """
-    lr = 1e-5
-    if epoch > 180:
+    lr = learning_rate
+    if epoch > 80:
         lr *= 0.5e-3
-    elif epoch > 160:
+    elif epoch > 60:
         lr *= 1e-3
-    elif epoch > 120:
+    elif epoch > 40:
         lr *= 1e-2
-    elif epoch > 80:
+    elif epoch > 20:
         lr *= 1e-1
     print('Learning rate: ', lr)
     return lr

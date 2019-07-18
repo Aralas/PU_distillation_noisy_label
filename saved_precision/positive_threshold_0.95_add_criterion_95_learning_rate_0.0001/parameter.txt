@@ -82,3 +82,15 @@ seed:99
  epochs:20
  learning_rate:0.000100
  data_augmentation:True
+seed:99
+ noise_level:0.8
+ clean_data_size:200
+ additional_data_limitation:100,2000
+ positive_threshold:0.95
+     add_criterion:95
+ K_iteration:10
+ N_bagging:100
+ batch_size:32
+ epochs:20
+ learning_rate:0.000100
+ data_augmentation:True
