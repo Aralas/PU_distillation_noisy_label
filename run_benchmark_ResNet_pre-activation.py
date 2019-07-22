@@ -50,12 +50,12 @@ from keras.regularizers import l2
 ***** Set parameters *****
 '''
 seed = 99
-noise_level = 0
+noise_level = 0.7
 clean_data_size = 200
 
 batch_size = 64
-epochs = 200
-learning_rate = 0.0003
+epochs = 50
+learning_rate = 0.0001
 data_augmentation = True
 
 n = 2
@@ -69,7 +69,7 @@ precision_dir = os.path.join(os.getcwd(), 'saved_precision')
 precision_dir += path_name
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "5"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
