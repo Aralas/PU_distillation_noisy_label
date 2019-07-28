@@ -29,8 +29,10 @@ n: number of blocks in ResNet
 """
 
 from __future__ import print_function
+
 import os
 from copy import deepcopy
+
 import keras
 import numpy as np
 import tensorflow as tf
@@ -38,18 +40,17 @@ from keras import backend as K
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from keras.callbacks import ReduceLROnPlateau
 from keras.datasets import cifar10
-from keras.preprocessing.image import ImageDataGenerator
 from keras.layers import AveragePooling2D, Input, Flatten
 from keras.layers import Dense, Conv2D, BatchNormalization, Activation
 from keras.models import Model
 from keras.optimizers import Adam
+from keras.preprocessing.image import ImageDataGenerator
 from keras.regularizers import l2
-
 
 '''
 ***** Set parameters *****
 '''
-
+seed = 99
 noise_level = 0.9
 clean_data_size = 200
 
@@ -61,7 +62,7 @@ bagging = True
 
 n = 2
 depth = n * 9 + 2
-file_index = 0
+file_index = 2
 
 if not bagging:
     path_name = '/teacher_model'
@@ -72,8 +73,7 @@ model_dir += path_name
 precision_dir = os.path.join(os.getcwd(), 'saved_precision')
 precision_dir += path_name
 
-
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -81,7 +81,6 @@ K.set_session(sess)
 
 np.set_printoptions(threshold=np.inf)
 
-seed = 99+file_index
 np.random.seed(seed)
 tf.set_random_seed(seed)
 
@@ -147,7 +146,8 @@ precision = eval(precision.replace('][','], [').replace(',,,,', ',').replace(',,
 for label in range(10):
     add_number.append(len(precision[label]))
 bootstrap_size = min(add_number)
-    
+
+np.random.seed(seed + file_index)
 for label in range(10):
     index = precision[label]
     if bagging:
