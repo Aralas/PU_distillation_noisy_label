@@ -28,7 +28,7 @@ from keras.regularizers import l2
 '''
 ***** Set parameters *****
 '''
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -39,7 +39,7 @@ seed = 99
 np.random.seed(seed)
 tf.set_random_seed(seed)
 
-noise_level = 0.5
+noise_level = 0.7
 student_lambda = 0.3
 clean_data_size = 200
 
@@ -327,7 +327,7 @@ y_pseudo = np.concatenate((y_pseudo, y_clean), axis=0)
 # Generate model.
 """
 model = resnet_v2(input_shape, depth, num_classes)
-model_name = 'cifar10_file%d.h5' % file_index
+model_name = 'cifar10_noise_%.1f_lambda_%.2f_file%d.h5' % (noise_level, student_lambda, file_index)
 filepath = os.path.join(model_dir, model_name)
 
 # Prepare callbacks for model saving and for learning rate adjustment.
