@@ -49,7 +49,7 @@ from keras.regularizers import l2
 '''
 ***** Set parameters *****
 '''
-seed = 99
+
 noise_level = 0.9
 clean_data_size = 200
 
@@ -57,12 +57,16 @@ batch_size = 64
 epochs = 500
 learning_rate = 0.001
 data_augmentation = True
+bagging = True
 
 n = 2
 depth = n * 9 + 2
-file_index = 8
+file_index = 0
 
-path_name = '/teacher_model'
+if not bagging:
+    path_name = '/teacher_model'
+else:
+    path_name = '/teacher_model_bagging'
 model_dir = os.path.join(os.getcwd(), 'saved_models')
 model_dir += path_name
 precision_dir = os.path.join(os.getcwd(), 'saved_precision')
@@ -77,8 +81,9 @@ K.set_session(sess)
 
 np.set_printoptions(threshold=np.inf)
 
+seed = 99+file_index
 np.random.seed(seed)
-tf.set_random_seed(seed+file_index)
+tf.set_random_seed(seed)
 
 if not os.path.exists(model_dir):
     os.makedirs(model_dir)
@@ -130,6 +135,7 @@ y_train = np.delete(y_train, clean_index, axis=0)
 y_train_orig = deepcopy(y_train)
 
 # Add additional data
+add_number = []
 file = open('additional_data_index.txt')
 lines = file.readlines()
 precision = '['
@@ -137,10 +143,19 @@ for line in lines:
     precision += line.replace('\n','').replace(' ', ',')
 precision += ']'
 precision = eval(precision.replace('][','], [').replace(',,,,', ',').replace(',,,', ',').replace(',,', ',').replace('[,', '['))
-for label in range(10):
-    x_clean = np.concatenate((x_clean, x_train[precision[label]]), axis=0)
-    y_clean = np.concatenate((y_clean, tf.contrib.keras.utils.to_categorical([label]*len(precision[label]), 10)))
 
+for label in range(10):
+    add_number.append(len(precision[label]))
+bootstrap_size = min(add_number)
+    
+for label in range(10):
+    index = precision[label]
+    if bagging:
+        index = np.random.choice(index, bootstrap_size, replace=False)
+    x_clean = np.concatenate((x_clean, x_train[index]), axis=0)
+    y_clean = np.concatenate((y_clean, tf.contrib.keras.utils.to_categorical([label]*len(index), 10)))
+    
+    
 def lr_schedule(epoch):
     """Learning Rate Schedule
 
