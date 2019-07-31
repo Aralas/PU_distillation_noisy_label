@@ -55,14 +55,14 @@ noise_level = 0.9
 clean_data_size = 200
 
 batch_size = 64
-epochs = 300
+epochs = 500
 learning_rate = 0.001
 data_augmentation = True
 bagging = True
 
 n = 2
 depth = n * 9 + 2
-file_index = 3
+file_index = 15
 
 if not bagging:
     path_name = '/teacher_model'

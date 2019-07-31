@@ -28,7 +28,7 @@ from keras.regularizers import l2
 '''
 ***** Set parameters *****
 '''
-os.environ["CUDA_VISIBLE_DEVICES"] = "7"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -39,8 +39,8 @@ seed = 99
 np.random.seed(seed)
 tf.set_random_seed(seed)
 
-noise_level = 0.7
-student_lambda = 0.3
+noise_level = 0.5
+student_lambda = 0.7
 clean_data_size = 200
 
 batch_size = 64
@@ -51,7 +51,7 @@ bagging = True
 
 n = 2
 depth = n * 9 + 2
-file_index = 0
+file_index = 1
 
 path_name = '/student_model'
 model_dir = os.path.join(os.getcwd(), 'saved_models')
@@ -310,8 +310,8 @@ else:
 teacher_model_dir = os.path.join(os.getcwd(), 'saved_models')
 teacher_model_dir += teacher_path_name
 
-y_pred = np.zeros((5, len(x_train), 10))
-for teacher_index in range(5):
+y_pred = np.zeros((20, len(x_train), 10))
+for teacher_index in range(20):
     model_name = 'cifar10_file%d.h5' % file_index
     filepath = os.path.join(teacher_model_dir, model_name)
     teacher_model = resnet_v2(input_shape, depth, num_classes)
