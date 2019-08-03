@@ -49,7 +49,7 @@ from keras.regularizers import l2
 ***** Set parameters *****
 '''
 seed = 99
-noise_level = 0.9
+noise_level = 0
 clean_data_size = 200
 
 batch_size = 64
@@ -60,7 +60,7 @@ bagging = True
 
 n = 2
 depth = n * 9 + 2
-file_index = 0
+file_index = 1
 
 if not bagging:
     path_name = '/teacher_model'
@@ -386,23 +386,22 @@ else:
     np.random.seed(seed + file_index)
 
     for epoch in range(epochs):
-        if epoch % 10 == 0:
-            for label in range(10):
-                index = precision[label]
-                if bagging:
-                    index = np.random.choice(index, bootstrap_size, replace=False)
-                x = np.concatenate((x_clean, x_train[index]), axis=0)
-                y = np.concatenate((y_clean, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
+        for label in range(10):
+            index = precision[label]
+            if bagging:
+                index = np.random.choice(index, bootstrap_size, replace=False)
+            x = np.concatenate((x_clean, x_train[index]), axis=0)
+            y = np.concatenate((y_clean, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
 
         model.compile(loss='categorical_crossentropy',
                       optimizer=Adam(lr=lr_schedule(epoch)),
                       metrics=['accuracy'])
         History = model.fit_generator(datagen.flow(x, y, batch_size=batch_size),
-                                      steps_per_epoch=400,
+                                      steps_per_epoch=4000,
                                       validation_data=(x_validation, y_validation),
                                       epochs=1, verbose=1, workers=4)
-        val_acc.append(History.history['val_acc'])
-        train_acc.append(History.history['acc'])
+        val_acc.append(History.history['val_acc'][0])
+        train_acc.append(History.history['acc'][0])
         test_acc.append(model.evaluate(x_test, y_test)[1])
         print('epoch:%d, training accuracy:%.3f, validation accuracy:%.3f, test accuracy:%.3f'
               % (epoch, train_acc[-1], val_acc[-1], test_acc[-1]))
