@@ -28,7 +28,7 @@ from keras.regularizers import l2
 '''
 ***** Set parameters *****
 '''
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -313,7 +313,7 @@ teacher_model_dir += teacher_path_name
 
 y_pred = np.zeros((20, len(x_train), 10))
 for teacher_index in range(20):
-    model_name = 'cifar10_file%d.h5' % file_index
+    model_name = 'cifar10_file%d.h5' % teacher_index
     filepath = os.path.join(teacher_model_dir, model_name)
     teacher_model = resnet_v2(input_shape, depth, num_classes)
     teacher_model.load_weights(filepath)
