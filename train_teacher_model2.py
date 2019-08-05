@@ -60,7 +60,7 @@ bagging = True
 
 n = 2
 depth = n * 9 + 2
-file_index = 1
+file_index = 4
 
 if not bagging:
     path_name = '/teacher_model'
@@ -391,7 +391,7 @@ else:
             if bagging:
                 index = np.random.choice(index, bootstrap_size, replace=False)
             x = np.concatenate((x_clean, x_train[index]), axis=0)
-            y = np.concatenate((y_clean, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)))
+            y = np.concatenate((y_clean, tf.contrib.keras.utils.to_categorical([label] * len(index), 10)), axis=0)
 
         model.compile(loss='categorical_crossentropy',
                       optimizer=Adam(lr=lr_schedule(epoch)),
@@ -405,7 +405,7 @@ else:
         test_acc.append(model.evaluate(x_test, y_test)[1])
         print('epoch:%d, training accuracy:%.3f, validation accuracy:%.3f, test accuracy:%.3f'
               % (epoch, train_acc[-1], val_acc[-1], test_acc[-1]))
-        if epoch == 0 or (epoch > 0 and val_acc[-1] > val_acc[-2]):
+        if val_acc[-1] > np.max(val_acc):
             model.save_weights(filepath)
 
 # Record accuracy.
