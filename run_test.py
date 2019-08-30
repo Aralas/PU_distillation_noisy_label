@@ -31,19 +31,21 @@ from generate_CNN import CNN
 seed = 99
 noise_level = 0.8
 clean_data_size = 200
-additional_data_limitation = [100, 2000]
+additional_data_limitation = [100, 4000]
 positive_threshold = 0.95
 add_criterion = 95
 K_iteration = 10
 N_bagging = 100
-label = 6
+label = 7
 
 batch_size = 32
 epochs = 20
 learning_rate = 0.0001
 data_augmentation = True
 
-path_name = '/positive_threshold_%.2f_add_criterion_%d_learning_rate_%.4f'%(positive_threshold, add_criterion, learning_rate)
+path_name = '/positive_threshold_%.2f_add_criterion_%d_learning_rate_%.4f_new'%(positive_threshold, add_criterion, learning_rate)
+if not data_augmentation:
+    path_name += '_no_augmentation'
 model_dir = os.path.join(os.getcwd(), 'saved_models')
 if label == None:
     model_dir += path_name
@@ -55,7 +57,7 @@ precision_dir += path_name
 print(model_dir)
 print(precision_dir)
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
