@@ -149,6 +149,7 @@ while sum(label_slice == new_label) > 0:
     n = sum(label_slice == new_label)
     new_label[label_slice == new_label] = np.random.randint(low=0, high=10, size=n)
 y_train[incorrect_index] = new_label
+train_set.targets[split:] = y_train
 print(np.mean(y_train == y_train_org))
 
 train_loader = torch.utils.data.DataLoader(
