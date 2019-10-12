@@ -222,3 +222,4 @@ for epoch in range(epoch_nums):
         epoch + 1, loss_sum / len(train_loader), valid_acc.item() / total, test_acc.item() / total,
         time.time() - start_time))
     f.flush()
+f.close()
