@@ -1,0 +1,13 @@
+epoch: 1, train loss: 2.293, valid acc: 0.272, test acc: 0.274, time cost: 90.0 sec 
+epoch: 2, train loss: 2.275, valid acc: 0.326, test acc: 0.326, time cost: 89.3 sec 
+epoch: 3, train loss: 2.266, valid acc: 0.365, test acc: 0.369, time cost: 88.7 sec 
+epoch: 4, train loss: 2.258, valid acc: 0.417, test acc: 0.413, time cost: 90.3 sec 
+epoch: 5, train loss: 2.252, valid acc: 0.417, test acc: 0.423, time cost: 89.6 sec 
+epoch: 6, train loss: 2.245, valid acc: 0.447, test acc: 0.449, time cost: 90.4 sec 
+epoch: 7, train loss: 2.239, valid acc: 0.457, test acc: 0.460, time cost: 89.2 sec 
+epoch: 8, train loss: 2.234, valid acc: 0.485, test acc: 0.485, time cost: 89.2 sec 
+epoch: 9, train loss: 2.230, valid acc: 0.508, test acc: 0.511, time cost: 89.7 sec 
+epoch: 10, train loss: 2.223, valid acc: 0.513, test acc: 0.522, time cost: 90.9 sec 
+epoch: 11, train loss: 2.207, valid acc: 0.555, test acc: 0.561, time cost: 89.0 sec 
+epoch: 12, train loss: 2.201, valid acc: 0.564, test acc: 0.569, time cost: 90.3 sec 
+epoch: 13, train loss: 2.197, valid acc: 0.559, test acc: 0.561, time cost: 87.5 sec 

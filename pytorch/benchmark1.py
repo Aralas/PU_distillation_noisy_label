@@ -7,7 +7,7 @@ Created on 2019/10/12 14:28
 """
 
 import time
-
+import os
 import numpy as np
 import torch
 import torch.nn as nn
@@ -19,7 +19,7 @@ import torchvision.transforms as transforms
 from torch.utils.data.sampler import SubsetRandomSampler
 
 batch_size = 128
-lr = 0.1
+lr = 0.003
 epoch_nums = 100
 lr_decay = 0.5
 noise = 0.5
@@ -27,7 +27,8 @@ seed = 99
 np.random.seed(seed)
 
 # gpu or cpu
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+device = torch.device("cuda")
 
 
 class ResidualBlock(nn.Module):
@@ -113,6 +114,7 @@ train_set = torchvision.datasets.CIFAR10(
     root='./data/',
     train=True,
     transform=train_transform,
+    download=True,
 )
 
 
@@ -120,6 +122,7 @@ valid_set = torchvision.datasets.CIFAR10(
     root='./data/',
     train=True,
     transform=valid_transform,
+    download=True,
 )
 
 num_train = len(train_set)
@@ -168,6 +171,7 @@ test_set = torchvision.datasets.CIFAR10(
     root='./data/',
     train=False,
     transform=test_transform,
+    download=True,
 )
 test_loader = torch.utils.data.DataLoader(
     dataset=test_set,
@@ -180,7 +184,7 @@ net = ResNet18(num_class=10).to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(net.parameters(), lr=lr, momentum=0.9)
 
-f = open("acc_lr_%.2f_noise_%.1f.txt" % (lr, noise), "a+")
+f = open("record/acc_lr_%.3f_noise_%.1f.txt" % (lr, noise), "a+")
 for epoch in range(epoch_nums):
     # 每10个epoch就decay一下学习率
     if epoch > 0 and epoch % 10 == 0:
