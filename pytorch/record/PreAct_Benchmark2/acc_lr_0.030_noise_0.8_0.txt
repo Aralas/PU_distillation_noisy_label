@@ -1,0 +1,1 @@
+epoch: 1, train loss: 2.308, valid acc: 0.232, test acc: 0.229, time cost: 57.7 sec 
