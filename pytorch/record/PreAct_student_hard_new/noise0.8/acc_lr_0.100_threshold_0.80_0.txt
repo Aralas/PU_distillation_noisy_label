@@ -1,0 +1,4 @@
+epoch: 1, train loss: 1.721, valid acc: 0.414, test acc: 0.426, time cost: 323.9 sec 
+epoch: 2, train loss: 1.322, valid acc: 0.498, test acc: 0.503, time cost: 364.6 sec 
+epoch: 3, train loss: 1.127, valid acc: 0.532, test acc: 0.535, time cost: 350.6 sec 
+epoch: 4, train loss: 1.025, valid acc: 0.566, test acc: 0.565, time cost: 344.7 sec 

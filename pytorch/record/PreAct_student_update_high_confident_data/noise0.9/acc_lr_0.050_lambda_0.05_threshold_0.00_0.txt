@@ -93,3 +93,8 @@ epoch: 92, train loss: 1.445, valid acc: 0.577, test acc: 0.577, time cost: 238.
 epoch: 93, train loss: 1.444, valid acc: 0.573, test acc: 0.577, time cost: 236.9 sec 
 epoch: 94, train loss: 1.445, valid acc: 0.575, test acc: 0.577, time cost: 239.4 sec 
 epoch: 95, train loss: 1.447, valid acc: 0.574, test acc: 0.577, time cost: 237.8 sec 
+epoch: 96, train loss: 1.446, valid acc: 0.572, test acc: 0.577, time cost: 239.9 sec 
+epoch: 97, train loss: 1.445, valid acc: 0.571, test acc: 0.577, time cost: 238.0 sec 
+epoch: 98, train loss: 1.446, valid acc: 0.572, test acc: 0.577, time cost: 240.0 sec 
+epoch: 99, train loss: 1.446, valid acc: 0.575, test acc: 0.577, time cost: 237.7 sec 
+epoch: 100, train loss: 1.449, valid acc: 0.570, test acc: 0.577, time cost: 239.7 sec 
