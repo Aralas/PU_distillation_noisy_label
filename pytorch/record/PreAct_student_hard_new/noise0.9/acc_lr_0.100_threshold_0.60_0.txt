@@ -87,3 +87,14 @@ epoch: 86, train loss: 0.438, valid acc: 0.582, test acc: 0.587, time cost: 339.
 epoch: 87, train loss: 0.441, valid acc: 0.580, test acc: 0.583, time cost: 345.8 sec 
 epoch: 88, train loss: 0.438, valid acc: 0.583, test acc: 0.588, time cost: 369.1 sec 
 epoch: 89, train loss: 0.443, valid acc: 0.582, test acc: 0.587, time cost: 334.7 sec 
+epoch: 90, train loss: 0.436, valid acc: 0.578, test acc: 0.583, time cost: 356.8 sec 
+epoch: 91, train loss: 0.439, valid acc: 0.581, test acc: 0.584, time cost: 349.7 sec 
+epoch: 92, train loss: 0.440, valid acc: 0.580, test acc: 0.583, time cost: 337.6 sec 
+epoch: 93, train loss: 0.439, valid acc: 0.583, test acc: 0.587, time cost: 373.3 sec 
+epoch: 94, train loss: 0.442, valid acc: 0.583, test acc: 0.587, time cost: 315.6 sec 
+epoch: 95, train loss: 0.439, valid acc: 0.584, test acc: 0.586, time cost: 359.6 sec 
+epoch: 96, train loss: 0.444, valid acc: 0.584, test acc: 0.589, time cost: 353.4 sec 
+epoch: 97, train loss: 0.444, valid acc: 0.580, test acc: 0.584, time cost: 335.7 sec 
+epoch: 98, train loss: 0.439, valid acc: 0.580, test acc: 0.581, time cost: 373.7 sec 
+epoch: 99, train loss: 0.437, valid acc: 0.581, test acc: 0.587, time cost: 340.6 sec 
+epoch: 100, train loss: 0.439, valid acc: 0.581, test acc: 0.586, time cost: 344.8 sec 
