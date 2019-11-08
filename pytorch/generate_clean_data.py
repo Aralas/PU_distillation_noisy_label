@@ -41,7 +41,7 @@ def mixup_data(x, y, alpha=1.0, use_cuda=True):
 def mixup_criterion(criterion, pred, y_a, y_b, lam):
     return lam * criterion(pred, y_a) + (1 - lam) * criterion(pred, y_b)
 
-def main(threshold, criterion, lr, label):
+def main(threshold, add_criterion, lr, label):
     seed = 99
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -126,8 +126,8 @@ def main(threshold, criterion, lr, label):
         shuffle=False,
     )    
     
-    path = "saved_precision/threshold_%.2f_criterion_%d_lr_%.3f/"%(threshold, criterion, lr)
-    model_path = "saved_model/threshold_%.2f_criterion_%d_lr_%.3f/"%(threshold, criterion, lr)
+    path = "saved_precision/threshold_%.2f_criterion_%d_lr_%.3f/"%(threshold, add_criterion, lr)
+    model_path = "saved_model/threshold_%.2f_criterion_%d_lr_%.3f_label%d/"%(threshold, add_criterion, lr, label)
     
     if not os.path.exists(path):
         os.makedirs(path)
@@ -200,18 +200,10 @@ def main(threshold, criterion, lr, label):
                     
                     inputs, labels = inputs.to(device), labels.to(device)
                     labels = labels.float()
-                    # labels = torch.reshape(labels, (-1, 1))
                     optimizer.zero_grad()
                     outputs = net(inputs)
                     outputs = torch.sigmoid(outputs).reshape(-1)
                     loss = criterion(outputs, labels)
-                    loss_sum += loss.item()
-                    # mixup augmentation
-                    inputs, labels_a, labels_b, lam = mixup_data(inputs, labels, 0.5)
-                    inputs, targets_a, targets_b = map(Variable, (inputs, labels_a, labels_b))
-                    outputs = net(inputs)
-                    outputs = torch.sigmoid(outputs).reshape(-1)
-                    loss = mixup_criterion(criterion, outputs, labels_a, labels_b, lam)
                     loss_sum += loss.item()
                     loss.backward()
                     optimizer.step()
@@ -249,44 +241,43 @@ def main(threshold, criterion, lr, label):
             for x, y in train_loader:
                 x, y = x.to(device), y.to(device)
                 outputs = net(x)
-                outputs = torch.sigmoid(outputs)
-                pred_train += output.tolist()
-            y_pred_train[:, n] = pre_train
-            
+                outputs = torch.sigmoid(outputs).reshape(-1)
+                pred_train += outputs.tolist()
+            y_pred_train[:, n] = pred_train
             for x, y in valid_loader:
                 x, y = x.to(device), y.to(device)
                 outputs = net(x)
-                outputs = torch.sigmoid(outputs)
-                pred_valid += output.tolist()
-            y_pred_valid[:, n] = pre_valid        
+                outputs = torch.sigmoid(outputs).reshape(-1)
+                pred_valid += outputs.tolist()
+            y_pred_valid[:, n] = pred_valid        
 
-            # Generate additional data from training data set
-            pos_pred_train = np.sum(y_pred_train > threshold, axis=1)
-            add_index = np.where(pos_pred_train > criterion)[0]
-            if len(add_index) > additional_data_limitation[1]:
-                add_index = np.argsort(-pos_pred_train, axis=0)[0:additional_data_limitation[1]].reshape(-1)
-            elif len(add_index) < additional_data_limitation[0]:
-                add_index = np.argsort(-np.sum(y_pred_train, axis=1), axis=0)[0:additional_data_limitation[0]].reshape(-1)
-            additional_data_index = add_index
+        # Generate additional data from training data set
+        pos_pred_train = np.sum(y_pred_train > threshold, axis=1)
+        add_index = np.where(pos_pred_train > add_criterion)[0]
+        if len(add_index) > additional_data_limitation[1]:
+            add_index = np.argsort(-pos_pred_train, axis=0)[0:additional_data_limitation[1]].reshape(-1)
+        elif len(add_index) < additional_data_limitation[0]:
+            add_index = np.argsort(-np.sum(y_pred_train, axis=1), axis=0)[0:additional_data_limitation[0]].reshape(-1)
+        additional_data_index = add_index
 
-            record_file = open(os.path.join(precision_dir, 'training_label%d.txt' % i), 'a+')
-            record_file.write(str(additional_data_index) + '\n')
-            record_file.close()
+        record_file = open(os.path.join(path, 'training_label%d.txt' % label), 'a+')
+        record_file.write(str(additional_data_index) + '\n')
+        record_file.close()
 
-            # Test the precision on validation set
-            pos_pred_valid = np.sum(y_pred_valid > threshold, axis=1)
-            add_index_valid = np.where(pos_pred_valid > criterion)[0]           
+        # Test the precision on validation set
+        pos_pred_valid = np.sum(y_pred_valid > threshold, axis=1)
+        add_index_valid = np.where(pos_pred_valid > add_criterion)[0]           
 
-            record_file = open(os.path.join(precision_dir, 'validation_label%d.txt' % i), 'a+')
-            record_file.write(str(add_index_valid) + '\n')
-            record_file.close()
-            
-            evaluate_file = open(os.path.join(precision_dir, 'evaluation_label%d.txt' % i), 'a+')
-            train_precision = len(list(set(np.where(y_train == label)[0]) & set(additional_data_index)))/len(additional_data_index)
-            evaluate_file.write('iteration: %d, training set precision: %.3f, number: %d'%(train_precision, len(additional_data_index)) + '\n')
-            valid_precision = len(list(set(np.where(y_valid == label)[0]) & set(add_index_valid)))/(max(0.1, len(add_index_valid)))
-            evaluate_file.write('iteration: %d, validation set precision: %.3f, number: %d'%(valid_precision, len(add_index_valid)) + '\n')
-            evaluate_file.close()           
+        record_file = open(os.path.join(path, 'validation_label%d.txt' % label), 'a+')
+        record_file.write(str(add_index_valid) + '\n')
+        record_file.close()
+
+        evaluate_file = open(os.path.join(path, 'evaluation_label%d.txt' % label), 'a+')
+        train_precision = len(list(set(np.where(y_train == label)[0]) & set(additional_data_index)))/len(additional_data_index)
+        evaluate_file.write('iteration: %d, training set precision: %.3f, number: %d'%(k, train_precision, len(additional_data_index)) + '\n')
+        valid_precision = len(list(set(np.where(y_valid == label)[0]) & set(add_index_valid)))/(max(0.1, len(add_index_valid)))
+        evaluate_file.write('iteration: %d, validation set precision: %.3f, number: %d'%(k, valid_precision, len(add_index_valid)) + '\n')
+        evaluate_file.close()           
 
 # gpu or cpu
 device = torch.device("cuda")
@@ -297,10 +288,12 @@ lr_decay = 0.1
 N_bagging = 20
 K_iteration = 10
 clean_data_size = 200
-label = 2
+additional_data_limitation = [50, 3800]
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+label = 0
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 for lr in [0.01]:
     for threshold in [0.8]:
-        for criterion in [16]:
-            main(threshold, criterion, lr, label)
+        for add_criterion in [16]:
+            main(threshold, add_criterion, lr, label)
